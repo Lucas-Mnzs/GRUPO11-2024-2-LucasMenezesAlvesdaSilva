@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*) /GRUPO11-2024-2–LucasMenezesAlvesdaSilva/index.php?pag=$1

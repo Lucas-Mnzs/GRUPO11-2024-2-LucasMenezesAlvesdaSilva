@@ -1,0 +1,641 @@
+#abrir_fechar {
+  position: fixed;
+  z-index: 9997;
+  top: 90px;
+  left: 10px;
+  height: 35px;
+  width: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#abrir_fechar:hover {
+  filter: brightness(50%);
+}
+
+table {
+  margin: 15px auto;
+  border-collapse: collapse;
+  width: 100%;
+  box-shadow: 2px 2px 8px black;
+  overflow-x: auto;
+  display: block;
+  font-size: 0.8em;
+}
+
+tr,
+th,
+td {
+  border: 2px solid rgb(0, 0, 0);
+  text-align: center;
+  padding: 5px;
+}
+
+#logout {
+  cursor: pointer;
+  background-color: rgb(189, 0, 0);
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.274);
+  border-radius: 5px;
+  padding: 7.5px 20px;
+  position: fixed;
+  top: 25px;
+  right: 30px;
+  color: white;
+  z-index: 9997;
+  font-size: 1em;
+  transition: 0.3s;
+}
+
+#logout:hover {
+  background-color: rgb(255, 43, 43);
+}
+
+#corpo {
+  height: 100%;
+  padding: 15px;
+  padding-top: 100px;
+  background-color: white;
+  font-family: "corpo";
+}
+
+#corpo_opcoes {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#opcoes {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+}
+
+#opcoes img {
+  height: 250px;
+  width: 350px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.212);
+  border-radius: 10px;
+}
+
+#der_img {
+  background-color: black;
+}
+
+.fundo_opcao {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 250px;
+  width: 350px;
+  color: white;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.445);
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  cursor: pointer;
+  opacity: 0; /* Inicialmente invisível */
+  visibility: hidden; /* Garante que não ocupa espaço quando invisível */
+}
+
+.fundo_opcao.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+#fundo_pedidos,
+#fundo_produtos,
+#fundo_historico,
+#fundo_financas,
+#fundo_atividades,
+#fundo_funcionarios,
+#fundo_usuarios,
+#fundo_der {
+  background-color: rgba(0, 0, 0, 0.377);
+  height: 100vh;
+  width: 100%;
+  z-index: 9992;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+}
+
+#fundo_adicionar_produtos,
+#fundo_editar_produtos {
+  background-color: rgba(0, 0, 0, 0.377);
+  height: 100vh;
+  width: 100%;
+  z-index: 9993;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+}
+
+.fundo_pedidos,
+.fundo_produtos,
+.fundo_adicionar_produtos,
+.fundo_editar_produtos,
+.fundo_historico,
+.fundo_financas,
+.fundo_atividades,
+.fundo_funcionarios,
+.fundo_usuarios {
+  position: relative;
+  background-color: white;
+  max-height: 80%;
+  overflow-x: auto;
+  padding: 15px;
+}
+
+#fundo_der_img {
+  position: relative;
+  border-radius: 5px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.301);
+  max-width: 95%;
+  z-index: 9993;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+#closeDiagrama {
+  position: absolute;
+  cursor: pointer;
+  left: 15px;
+  width: 50px;
+}
+
+#corpo_adicionar,
+#corpo_editar {
+  display: flex;
+  flex-direction: column;
+}
+
+#corpo_financas {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto auto; /* Define duas linhas de tamanhos automáticos */
+  gap: 20px;
+  grid-template-areas:
+    "vendas_clientes vendas_pratos vendas_bebidas"
+    "vendas_periodo vendas_periodo vendas_periodo"
+    "vendas_periodo_valor vendas_periodo_valor vendas_periodo_valor";
+}
+
+#vendas_clientes {
+  grid-area: vendas_clientes;
+}
+
+#vendas_pratos {
+  grid-area: vendas_pratos;
+}
+
+#vendas_bebidas {
+  grid-area: vendas_bebidas;
+}
+
+#vendas_periodo {
+  grid-area: vendas_periodo;
+}
+
+#vendas_periodo_valor {
+  grid-area: vendas_periodo_valor;
+}
+
+#vendas_periodo,
+#vendas_periodo_valor {
+  text-align: center;
+}
+
+.back {
+  position: absolute;
+  cursor: pointer;
+}
+
+.refresh {
+  position: absolute;
+  cursor: pointer;
+  right: 15px;
+  top: 15px;
+}
+
+.back img,
+.refresh img {
+  width: 40px;
+  height: 40px;
+}
+
+.search {
+  padding: 10px;
+  padding-left: 40px;
+  width: 90%;
+  margin: auto;
+  display: block;
+  border: 1px solid rgb(219, 219, 219);
+  border-radius: 5px;
+  transition: 0.3s;
+  outline: none;
+}
+
+.search:focus {
+  border: 1px rgb(53, 31, 31) solid;
+  filter: drop-shadow(0 0 5px rgb(77, 45, 45));
+}
+
+.barra {
+  position: relative;
+}
+
+#lupa {
+  top: 20%;
+  left: 6%;
+  position: absolute;
+  z-index: 1;
+}
+
+#lupa img {
+  width: 25px;
+}
+
+td button {
+  height: 35px;
+  width: 90px;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+  transition: 0.3s;
+}
+
+td button:hover {
+  filter: brightness(80%);
+}
+
+.verde {
+  color: white;
+  background-color: rgb(19, 99, 19);
+}
+
+.vermelho {
+  color: white;
+  background-color: rgb(185, 0, 0);
+}
+
+#adicionar {
+  background-color: rgb(53, 31, 31);
+  color: white;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  font-size: 2em;
+  position: fixed;
+  bottom: 105px;
+  right: 145px;
+  z-index: 9998;
+  cursor: pointer;
+}
+
+#adicionarFunc {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  z-index: 9998;
+  cursor: pointer;
+}
+
+#adicionarFunc img {
+  width: 40px;
+  height: 40px;
+}
+
+#corpo_adicionar input,
+#corpo_editar input {
+  padding: 10px;
+  border: 1px solid rgb(219, 219, 219);
+  border-radius: 5px;
+  margin-top: 15px;
+  transition: 0.3s;
+  outline: none;
+}
+
+#corpo_adicionar input:focus,
+#corpo_editar input:focus {
+  border: 1px rgb(53, 31, 31) solid;
+  filter: drop-shadow(0 0 5px rgb(77, 45, 45));
+}
+
+#corpo_adicionar button,
+#corpo_editar button {
+  margin-top: 15px;
+  padding: 10px;
+  background-color: rgb(53, 31, 31);
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+  border: none;
+  border-radius: 5px;
+}
+
+#corpo_adicionar select,
+#corpo_editar select {
+  padding: 10px;
+  border-radius: 5px;
+  outline: none;
+  border: 1px solid rgb(219, 219, 219);
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.file {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  outline: none;
+  transition: 0.5s;
+  background: white;
+  color: rgb(100, 100, 100);
+  border: 1px solid rgb(219, 219, 219);
+  border-radius: 5px;
+  font-size: 0.9em;
+  padding-left: 10px;
+  margin-top: 15px;
+  cursor: text;
+}
+
+.span {
+  color: white;
+  background-color: rgb(53, 31, 31);
+  border-radius: 0 5px 5px 0;
+  float: right;
+  padding: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.span:hover,
+#corpo_adicionar button:hover,
+#corpo_editar button:hover {
+  filter: brightness(60%);
+}
+
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+#btnFil {
+  cursor: pointer;
+  padding: 5px 10px;
+  background-color: rgb(53, 31, 31);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  transition: 0.3s;
+  box-shadow: 5px 5px 8px rgba(0, 0, 0, 0.315);
+}
+
+#btnFil:hover {
+  filter: brightness(50%);
+}
+
+#filtro {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#filtro_final {
+  margin: auto 15px;
+}
+
+.graficos {
+  border-radius: 5px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.247);
+  padding: 5px;
+}
+
+.fundo_adicionar_user {
+  display: none;
+  background-color: white;
+  position: absolute;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  padding: 15px;
+}
+
+.fundo_adicionar_user h1 {
+  margin-bottom: 15px;
+}
+
+.fundo_adicionar_user input {
+  padding: 10px;
+  border: 1px solid rgb(219, 219, 219);
+  border-radius: 5px;
+  width: 100%; /* Ajuste para 100% */
+  transition: 0.3s;
+  outline: none;
+}
+
+.fundo_adicionar_user input:focus {
+  border: 1px rgb(53, 31, 31) solid;
+  filter: drop-shadow(0 0 5px rgb(77, 45, 45));
+}
+
+#corpo_adicionar_user {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 30px;
+  text-align: center;
+}
+
+.btn-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px; /* Ajuste o gap entre os botões */
+}
+
+.btn {
+  display: flex;
+}
+
+.btn button {
+  margin-top: 15px;
+  height: 30px;
+  width: 400px;
+  border: none;
+  border-radius: 5px;
+  background-color: rgb(53, 31, 31);
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn button:hover {
+  filter: brightness(50%);
+}
+
+#fundo_load {
+  background-color: rgba(0, 0, 0, 0.377);
+  height: 100vh;
+  width: 100%;
+  z-index: 9999;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+}
+
+#load {
+  height: 100px;
+  width: 100px;
+  border-top: 3px solid white;
+  border-left: 3px solid white;
+  border-radius: 50%;
+
+  animation: load infinite linear 1s;
+}
+
+@keyframes load {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 1115px) {
+  #corpo {
+    padding-top: 90px;
+  }
+
+  #opcoes img {
+    height: 150px;
+    width: 250px;
+  }
+
+  .fundo_opcao {
+    height: 150px;
+    width: 250px;
+  }
+}
+
+@media (max-width: 809px) {
+  #corpo {
+    padding-top: 90px;
+  }
+
+  #opcoes {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  #opcoes img {
+    height: 150px;
+    width: 250px;
+  }
+
+  .fundo_opcao {
+    height: 150px;
+    width: 250px;
+  }
+}
+
+@media (max-width: 700px) {
+  #abrir_fechar {
+    top: 50px;
+  }
+
+  #corpo {
+    padding-top: 70px;
+  }
+
+  #logout {
+    top: 5px;
+    right: 30px;
+  }
+
+  #opcoes {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  #opcoes img {
+    height: 150px;
+    width: 250px;
+  }
+
+  .fundo_opcao {
+    height: 150px;
+    width: 250px;
+  }
+}
+
+@media (max-width: 600px) {
+  #abrir_fechar {
+    top: 40px;
+  }
+
+  #corpo {
+    padding-top: 70px;
+  }
+
+  #logout {
+    padding: 5px 18px;
+    top: 5px;
+    right: 30px;
+  }
+
+  #opcoes {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  #opcoes img {
+    height: 150px;
+    width: 250px;
+  }
+
+  .fundo_opcao {
+    height: 150px;
+    width: 250px;
+  }
+}
+
+@media (max-width: 550px) {
+  #opcoes {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  #opcoes {
+    grid-template-columns: 1fr;
+  }
+
+  #corpo {
+    padding-top: 80px;
+  }
+
+  #logout {
+    padding: 5px 18px;
+    top: 35px;
+    right: 10px;
+  }
+}
+
+@media (max-width: 350px) {
+  #opcoes {
+    grid-template-columns: 1fr;
+  }
+}

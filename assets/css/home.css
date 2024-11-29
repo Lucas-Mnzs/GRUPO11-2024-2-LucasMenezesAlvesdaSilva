@@ -1,0 +1,293 @@
+.formCont {
+  border: 1px solid rgb(53, 31, 31);
+  background-color: white;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.164);
+  border-radius: 5px;
+  margin-left: 100px;
+  position: absolute;
+  top: 20%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 390px;
+}
+
+@keyframes appear {
+  0% {
+    translate: -120%;
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+    translate: 0;
+  }
+}
+
+#formPrin {
+  z-index: 10;
+  animation: appear 1.2s ease-in-out;
+}
+
+#formSec {
+  display: none;
+  transform: translate(400px, 0);
+  transition: transform 0.1s ease-out;
+  text-align: center;
+  animation: appear 1.2s ease-in-out;
+}
+
+.formCont label,
+#resposta {
+  margin-top: 5px;
+  font-family: "corpo";
+}
+
+.formCont h1 {
+  font-family: "titulo";
+}
+
+.formCont input {
+  background-color: rgb(230, 230, 230);
+  height: 30px;
+  width: 300px;
+  padding: 10px;
+  outline: none;
+  transition: 0.3s;
+  border: none;
+  border-radius: 5px;
+  margin-top: 15px;
+}
+
+.formCont input:focus {
+  border: 1px rgb(53, 31, 31) solid;
+  filter: drop-shadow(0 0 5px rgb(77, 45, 45));
+}
+
+#num {
+  margin-bottom: 5px;
+}
+
+.formCont button {
+  margin-top: 15px;
+  height: 30px;
+  width: 300px;
+  border: none;
+  border-radius: 5px;
+  background-color: rgb(53, 31, 31);
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.formCont button:hover {
+  background-color: rgb(77, 45, 45);
+}
+
+#abrir,
+#esqSenha,
+#cadas {
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+#abrir:hover,
+#esqSenha:hover,
+#cadas:hover {
+  text-decoration: underline;
+}
+
+.close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+#formEsqueceu,
+#formSegunda {
+  display: none;
+  flex-direction: column;
+  text-align: center;
+  z-index: 10;
+}
+
+#formRecuperacao {
+  transform: translate(400px, 0);
+  display: none;
+  flex-direction: column;
+  text-align: center;
+}
+
+#formCad {
+  display: none;
+  width: 100%;
+  height: calc(100% - 80px);
+  margin-left: 0px;
+  top: 80px;
+  border: none;
+  border-radius: 0;
+}
+
+#formCadastro {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  gap: 20px;
+  height: 100%;
+  padding: 20px;
+}
+
+#formCadastro .inpu {
+  flex: 1 1 calc(33.33% - 20px);
+  max-width: calc(33.33% - 20px);
+  min-width: 200px;
+}
+
+#formCadastro input {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.btn {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.backCad,
+.backConf {
+  position: absolute;
+  left: 10px;
+  top: 15px;
+  cursor: pointer;
+}
+
+.backCad img,
+.backConf img {
+  width: 30px;
+}
+
+#fundo_load {
+  background-color: rgba(0, 0, 0, 0.377);
+  height: 100vh;
+  width: 100%;
+  z-index: 9999;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+}
+
+#load {
+  height: 100px;
+  width: 100px;
+  border-top: 3px solid white;
+  border-left: 3px solid white;
+  border-radius: 50%;
+
+  animation: load infinite linear 1s;
+}
+
+@keyframes load {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 900px) {
+  #formPrin {
+    padding-top: 15%;
+    position: initial;
+    margin: auto;
+    z-index: 10;
+    width: 90%;
+  }
+
+  #formSec {
+    display: none;
+    text-align: center;
+    margin-left: 0;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    z-index: 15;
+    width: 90%;
+  }
+
+  #formPrin input,
+  #formSec input {
+    width: 100%;
+  }
+
+  #formPrin button,
+  #formSec button {
+    width: 100%;
+  }
+
+  #formEsqueceu,
+  #formSegunda {
+    width: 90%;
+    margin-left: 0;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+  }
+
+  #formEsqueceu input,
+  #formSegunda input {
+    width: 100%;
+  }
+
+  #formEsqueceu button,
+  #formSegunda button {
+    width: 100%;
+  }
+
+  #formCad {
+    display: none;
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    box-shadow: none;
+    top: 0;
+    z-index: 9999;
+  }
+
+  #formCadastro {
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    justify-content: normal;
+    gap: 10px;
+    padding: 0;
+  }
+
+  #formCadastro .inpu {
+    max-width: 100%;
+  }
+
+  .btn {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .btn button {
+    width: 100%;
+  }
+
+  #formCadastro input {
+    margin-top: 0px;
+  }
+}

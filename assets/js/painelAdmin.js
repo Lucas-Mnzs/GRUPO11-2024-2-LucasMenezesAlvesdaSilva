@@ -1,5 +1,6 @@
 $(document).ready(function () {
   getSitu();
+  $("#fundo_load").css("display", "none");
 });
 
 function mudarSitu() {

@@ -2,7 +2,7 @@ $("#titulo").on("click", function () {
   localStorage.setItem("ultimaPagina", "home");
   $.ajax({
     url: "home",
-    method: "POST",
+    method: "GET",
     success: function (response) {
       $("#paginas").html(response);
     },
@@ -19,7 +19,7 @@ $(document).ready(function () {
     // Redireciona para a página do cardápio se necessário
     $.ajax({
       url: "cardapio",
-      type: "POST",
+      type: "GET",
       success: function (response) {
         $("#paginas").html(response);
       },
@@ -27,7 +27,7 @@ $(document).ready(function () {
   } else if (localStorage.getItem("ultimaPagina") === "painelAdmin") {
     $.ajax({
       url: "painelAdmin",
-      type: "POST",
+      type: "GET",
       success: function (response) {
         $("#paginas").html(response);
       },
@@ -35,7 +35,7 @@ $(document).ready(function () {
   } else {
     $.ajax({
       url: "home",
-      type: "POST",
+      type: "GET",
       success: function (response) {
         $("#paginas").html(response);
       },

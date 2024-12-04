@@ -203,6 +203,41 @@
             </div>
         </div>
     </section>
+    <footer>
+        <div id="conteudo_footer">
+            <div id="sobre">
+                <h1>Sobre nós</h1>
+                <p>No Cantinho Suam, oferecemos refeições caseiras de qualidade com a praticidade do delivery. Nosso
+                    cardápio é pensado para agradar todos os gostos, com opções frescas e saborosas preparadas com
+                    carinho. Estamos aqui para tornar o seu dia mais fácil e delicioso, entregando quentinhas quentinhas
+                    no conforto da sua casa ou trabalho. Experimente o sabor de uma comida feita com amor!</p>
+            </div>
+            <div id="redes">
+                <h1>Redes</h1>
+                <div id="icones">
+                    <div class="icon_logo" style="margin-bottom: 15px;">
+                        <a href="https://wa.me/5521990420932?text=Olá! Eu gostaria de tirar uma dúvida!"
+                            target="_blank">
+                            <img src="assets/image/icon_wpp.png" alt="logo WhatsApp" class="logos"
+                                id="logoWpp"></img><span>+55(21)99042-0932</span></a>
+                    </div>
+                    <div class="icon_logo">
+                        <a href="#"><img src="assets/image/icon_insta.png" alt="Logo instagram" class="logos"
+                                id="logoInsta"></img><span>Instagram</span></a>
+                    </div>
+                </div>
+            </div>
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3678.8335259780206!2d-43.31605242516302!3d-22.771558533051206!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x997aa3bcff72fb%3A0x77d5c3defa357629!2sR.%20Dr.%20Furquim%20Mendes%2C%20990%20-%20Vila%20Centenario%2C%20Duque%20de%20Caxias%20-%20RJ%2C%2025030-170!5e0!3m2!1spt-BR!2sbr!4v1733319413632!5m2!1spt-BR!2sbr"
+                width="300" height="200" style="border:0;" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </div>
+        <hr>
+        <div id="copy">
+            <p>&copy; 2024 Cantinho Suam. Todos os direitos reservados.</p>
+        </div>
+    </footer>
     <script src="assets/js/cardapio.js"></script>
 </body>
 

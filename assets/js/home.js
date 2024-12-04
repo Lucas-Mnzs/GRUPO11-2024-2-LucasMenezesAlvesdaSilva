@@ -292,6 +292,7 @@ $("#formAut").on("submit", function (event) {
             },
           });
         }, 1000);
+        tentativasRestantes = 3; // Reseta as tentativas
       } else {
         tratarErro();
       }

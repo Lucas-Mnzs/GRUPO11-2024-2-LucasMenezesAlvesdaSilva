@@ -673,6 +673,7 @@ footer {
 
 #conteudo_footer {
   display: flex;
+  margin-top: 15px;
   margin-bottom: 15px;
   color: white;
   justify-content: space-between;

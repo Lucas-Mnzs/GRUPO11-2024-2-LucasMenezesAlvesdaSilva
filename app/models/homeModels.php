@@ -147,11 +147,12 @@ class HomeModels
 
             if ($bairro == "Vila Centenário") {
                 $_SESSION['taxa'] = "R$ " . number_format(3, 2, ",", ".");
+            } else {
+                $fixedRate = 3.00; // Taxa fixa de R$3,00
+                $totalCost = $fixedRate + $cost; // Total em valor numérico
+                $_SESSION['taxa'] = "R$ " . number_format($totalCost, 2, ",", ".");
             }
 
-            $fixedRate = 3.00; // Taxa fixa de R$3,00
-            $totalCost = $fixedRate + $cost; // Total em valor numérico
-            $_SESSION['taxa'] = "R$ " . number_format($totalCost, 2, ",", ".");
 
             return json_encode(['status' => 'success']);
         } else {

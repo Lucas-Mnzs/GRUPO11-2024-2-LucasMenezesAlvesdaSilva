@@ -490,6 +490,7 @@ class painelAdminModels
             JOIN produtos ON historico.id_produto = produtos.idProdutos
             WHERE historico.ativo = 'sim'
             GROUP BY historico.id_pedido, historico.data, usuarios.pnome, historico.pagamento, historico.valor
+            ORDER BY historico.id_pedido DESC
         ");
         $cmd_historico->execute();
         $dados = $cmd_historico->fetchAll(PDO::FETCH_ASSOC);

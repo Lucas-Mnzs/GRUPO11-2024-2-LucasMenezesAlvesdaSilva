@@ -1,6 +1,9 @@
-$(document).ready(function () {
+$(function () {
   getSitu();
-  $("#fundo_load").css("display", "none");
+  const fundoLoad = $("#fundo_load");
+  if (fundoLoad.length) {
+    fundoLoad.css("display", "none");
+  }
 });
 
 function mudarSitu() {
@@ -1281,95 +1284,127 @@ function buscaCEP() {
 }
 
 function cadastrarFunc() {
-  let nome = $("#pNome").val();
-  let sobrenome = $("#sNome").val();
-  let nomeMae = $("#nomeMae").val();
-  let dataNascimento = $("#dataNascimento").val();
-  let cpf = $("#cpf").val();
-  let cell = $("#cell").val();
-  let email = $("#e_mail").val();
-  let cep = $("#cep").val();
-  let estado = $("#estado").val();
-  let cidade = $("#cidade").val();
-  let bairro = $("#bairro").val();
-  let rua = $("#rua_cad").val();
-  let num = $("#numero").val();
-  let comp = $("#complemento").val();
-  let referencia = $("#referencia").val();
-  let user = $("#user_cad").val();
-  let senha = $("#sen").val();
+  let pass = document.querySelector("#sen").value;
+  let cPass = document.querySelector("#cSen").value;
+  let user_cad = document.querySelector("#user_cad").value;
+  let sPass = pass.length >= 8;
+  let sUser = user_cad.length >= 6;
+  let passwordsMatch = pass === cPass;
 
-  let formData = new FormData();
+  if (passwordsMatch && sPass && sUser) {
+    let nome = $("#pNome").val();
+    let sobrenome = $("#sNome").val();
+    let nomeMae = $("#nomeMae").val();
+    let dataNascimento = $("#dataNascimento").val();
+    let cpf = $("#cpf").val();
+    let cell = $("#cell").val();
+    let email = $("#e_mail").val();
+    let cep = $("#cep").val();
+    let estado = $("#estado").val();
+    let cidade = $("#cidade").val();
+    let bairro = $("#bairro").val();
+    let rua = $("#rua_cad").val();
+    let num = $("#numero").val();
+    let comp = $("#complemento").val();
+    let referencia = $("#referencia").val();
+    let user = $("#user_cad").val();
+    let senha = $("#sen").val();
 
-  formData.append("nome", nome);
-  formData.append("sobrenome", sobrenome);
-  formData.append("nomeMae", nomeMae);
-  formData.append("data", dataNascimento);
-  formData.append("cpf", cpf);
-  formData.append("cell", cell);
-  formData.append("email", email);
-  formData.append("cep", cep);
-  formData.append("estado", estado);
-  formData.append("cidade", cidade);
-  formData.append("bairro", bairro);
-  formData.append("rua", rua);
-  formData.append("num", num);
-  formData.append("comp", comp);
-  formData.append("ref", referencia);
-  formData.append("user", user);
-  formData.append("senha", senha);
+    let formData = new FormData();
 
-  $.ajax({
-    url: "painelAdmin/adicionarFun",
-    type: "POST",
-    data: formData,
-    processData: false,
-    contentType: false,
-    dataType: "json",
-    success: function (response) {
-      if (response.status === "success") {
-        $("#fundo_load").css("display", "flex");
-        $(".resposta").text("Funcionário cadastrado!");
-        setTimeout(function () {
-          $(".fundo_adicionar_user").css("display", "none");
-          getFuncionarios();
-          $("#fundo_load").css("display", "none");
-          $("#pNome").val("");
-          $("#sNome").val("");
-          $("#nomeMae").val("");
-          $("#dataNascimento").val("");
-          $("#cpf").val("");
-          $("#cell").val("");
-          $("#e_mail").val("");
-          $("#cep").val("");
-          $("#estado").val("");
-          $("#cidade").val("");
-          $("#bairro").val("");
-          $("#rua_cad").val("");
-          $("#numero").val("");
-          $("#complemento").val("");
-          $("#referencia").val("");
-          $("#user_cad").val("");
-          $("#sen").val("");
-        }, 2000);
-      } else if (response.status === "errorUser") {
-        $("#erroUser").text("Usuário já cadastrado!");
-      } else if (response.status === "errorEmail") {
-        $("#erroEmail").text("E-mail já cadastrado!");
-      } else if (response.status === "errorCell") {
-        $("#erroCell").text("Celular já cadastrado!");
-      } else if (response.status === "errorCpf") {
-        $("#erroCpf").text("CPF já cadastrado!");
-      } else {
-        $(".resposta").text("Preencha todos os campos!");
-      }
-    },
-    error: function (xhr, status, error) {
-      console.log("Status: " + status); // Mostra o status do erro
-      console.log("Erro: " + error); // Mostra a descrição do erro
-      console.log("Resposta do servidor: " + xhr.responseText); // Exibe a resposta completa
-    },
-  });
+    formData.append("nome", nome);
+    formData.append("sobrenome", sobrenome);
+    formData.append("nomeMae", nomeMae);
+    formData.append("data", dataNascimento);
+    formData.append("cpf", cpf);
+    formData.append("cell", cell);
+    formData.append("email", email);
+    formData.append("cep", cep);
+    formData.append("estado", estado);
+    formData.append("cidade", cidade);
+    formData.append("bairro", bairro);
+    formData.append("rua", rua);
+    formData.append("num", num);
+    formData.append("comp", comp);
+    formData.append("ref", referencia);
+    formData.append("user", user);
+    formData.append("senha", senha);
+
+    $.ajax({
+      url: "painelAdmin/adicionarFun",
+      type: "POST",
+      data: formData,
+      processData: false,
+      contentType: false,
+      dataType: "json",
+      success: function (response) {
+        if (response.status === "success") {
+          $("#fundo_load").css("display", "flex");
+          $(".resposta").text("Funcionário cadastrado!");
+          setTimeout(function () {
+            $(".fundo_adicionar_user").css("display", "none");
+            $(".resposta").text("");
+            getFuncionarios();
+            $("#fundo_load").css("display", "none");
+            $("#pNome").val("");
+            $("#sNome").val("");
+            $("#nomeMae").val("");
+            $("#dataNascimento").val("");
+            $("#cpf").val("");
+            $("#cell").val("");
+            $("#e_mail").val("");
+            $("#cep").val("");
+            $("#estado").val("");
+            $("#cidade").val("");
+            $("#bairro").val("");
+            $("#rua_cad").val("");
+            $("#numero").val("");
+            $("#complemento").val("");
+            $("#referencia").val("");
+            $("#user_cad").val("");
+            $("#sen").val("");
+            $("#cSen").val("");
+          }, 2000);
+        } else if (response.status === "errorUser") {
+          $("#erroUser").text("Usuário já cadastrado!");
+        } else if (response.status === "errorEmail") {
+          $("#erroEmail").text("E-mail já cadastrado!");
+        } else if (response.status === "errorCell") {
+          $("#erroCell").text("Celular já cadastrado!");
+        } else if (response.status === "errorCpf") {
+          $("#erroCpf").text("CPF já cadastrado!");
+        }
+      },
+      error: function (xhr, status, error) {
+        console.log("Status: " + status); // Mostra o status do erro
+        console.log("Erro: " + error); // Mostra a descrição do erro
+        console.log("Resposta do servidor: " + xhr.responseText); // Exibe a resposta completa
+      },
+    });
+  } else if (
+    $("#pNome").val() == "" ||
+    $("#sNome").val() == "" ||
+    $("#nomeMae").val() == "" ||
+    $("#dataNascimento").val() == "" ||
+    $("#cpf").val() == "" ||
+    $("#cell").val() == "" ||
+    $("#e_mail").val() == "" ||
+    $("#cep").val() == "" ||
+    $("#estado").val() == "" ||
+    $("#cidade").val() == "" ||
+    $("#bairro").val() == "" ||
+    $("#rua_cad").val() == "" ||
+    $("#numero").val() == "" ||
+    $("#complemento").val() == "" ||
+    $("#referencia").val() == "" ||
+    $("#user_cad").val() == "" ||
+    $("#sen").val() == "" ||
+    $("#cSen").val() == ""
+  ) {
+    $(".resposta").text("Preencha todos os campos!");
+  } else {
+    $(".resposta").text("");
+  }
 }
 
 $("#cep").mask("00000-000");

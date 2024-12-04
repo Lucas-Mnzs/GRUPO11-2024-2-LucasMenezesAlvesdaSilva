@@ -16,7 +16,7 @@
     <header id="topo">
         <a href="" id="titulo">
             <img src="assets/image/logo.png" alt="Logo">
-            <h1>Quentinhas do Lucas</h1>
+            <h1>Cantinho Suam</h1>
         </a>
     </header>
 

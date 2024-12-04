@@ -326,6 +326,8 @@
 #valor_qtd_carrinho {
   display: flex;
   align-items: center;
+  width: 100%;
+  justify-content: space-between;
 }
 
 input[type="number"]::-webkit-inner-spin-button {

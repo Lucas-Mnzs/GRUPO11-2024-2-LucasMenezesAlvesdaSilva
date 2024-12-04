@@ -111,7 +111,8 @@
                     <div id="endereco_corpo">
                         <div class="endereco">
                             <div id="rua_num">
-                                <p><b><?php echo $_SESSION['rua'] . ', ' . $_SESSION['numero'] ?></b></p>
+                                <p style="font-weight: bold;">
+                                    <?php echo $_SESSION['rua'] . ', ' . $_SESSION['numero'] ?></p>
                             </div>
                             <div id="bairro_cidade_estado">
                                 <p><?php echo $_SESSION['bairro'] . ' - ' . $_SESSION['cidade'] . '/' . $_SESSION['estado'] ?>

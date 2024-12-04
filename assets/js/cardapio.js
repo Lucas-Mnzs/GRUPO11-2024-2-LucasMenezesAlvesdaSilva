@@ -139,6 +139,10 @@ $("#trocar_endereco").on("click", function () {
           $("#taxa").append(`
             <p>Taxa: ${response.taxa}</p>
             `);
+
+          rua = `${response.rua}, ${response.numero}`;
+          bairro = `${response.bairro} - ${response.cidade}/${response.estado}`;
+
           $("#res_trocar").text("Endereço atualizado!");
           setTimeout(function () {
             esconderLoad();
@@ -399,29 +403,33 @@ function getCarrinho() {
                             <h1>${dado.nome}</h1>
                             <p>${dado.descricao}</p>
                         </div>
-                        <p id="valor_produto_carrinho">${parseFloat(
-                          dado.preco
-                        ).toLocaleString("pt-BR", {
-                          style: "currency",
-                          currency: "BRL",
-                        })}</p>
-                        <div id="qtd_carrinho">
-                            <div id="qtd_remover">
-                            
-                                <button type="button" id="somar" onclick="somar(this)">+</button>
-                                <input type="number" name="qtd_uni" id="qtd_uni" readonly value="${
-                                  dado.qtd
-                                }">
-                                <button type="button" id="subtrair" onclick="subtrair(this)">-</button>
-                              
-                                <button type="button" class="remover" onclick="removerProduto(${
-                                  dado.id_produto
-                                })">Remover</button>
-                              
-                            </div>
-                            <input type="hidden" name="id_produto" id="id_produto" value="${
-                              dado.id_produto
-                            }">
+                        <div id="direita" style="display: flex; align-items: center;">
+                          <div id="valor_uni_prod">
+                            <p id="valor_produto_carrinho">${parseFloat(
+                              dado.preco
+                            ).toLocaleString("pt-BR", {
+                              style: "currency",
+                              currency: "BRL",
+                            })}</p>
+                          </div>
+                          <div id="qtd_carrinho">
+                              <div id="qtd_remover">
+                          
+                                  <button type="button" id="somar" onclick="somar(this)">+</button>
+                                  <input type="number" name="qtd_uni" id="qtd_uni" readonly value="${
+                                    dado.qtd
+                                  }">
+                                  <button type="button" id="subtrair" onclick="subtrair(this)">-</button>
+                          
+                                  <button type="button" class="remover" onclick="removerProduto(${
+                                    dado.id_produto
+                                  })">Remover</button>
+                          
+                              </div>
+                              <input type="hidden" name="id_produto" id="id_produto" value="${
+                                dado.id_produto
+                              }">
+                          </div>
                         </div>
                     </div>
                 </div>
@@ -446,7 +454,6 @@ function getCarrinho() {
         $.ajax({
           url: "cardapio/getValorTotal",
           type: "GET",
-          data: formData,
           dataType: "json",
           success: function (valor) {
             // Verifica se a forma de entrega é "entrega" e soma a taxa
@@ -539,6 +546,22 @@ $("#forma_pagamento").change(function () {
   if ($("#forma_pagamento").val() == "dinheiro") {
     $("#fundo_troco").css("display", "flex");
     $("#fundo_troco").css("z-index", "9997");
+  }
+});
+
+let rua = $("#rua_num p ").text();
+
+let bairro = $("#bairro_cidade_estado p").text();
+
+$("#forma_entrega").change(function () {
+  if ($("#forma_entrega").val() == "entrega") {
+    $("#rua_num p").text(rua);
+    $("#rua_num p").css("font-weight", "bold");
+    $("#bairro_cidade_estado p").text(bairro);
+  } else {
+    $("#rua_num p").text("Rua Doutor Furquim Mendes, 990");
+    $("#rua_num p").css("font-weight", "bold");
+    $("#bairro_cidade_estado p").text("Vila Centenário - Duque de Caxias/RJ");
   }
 });
 

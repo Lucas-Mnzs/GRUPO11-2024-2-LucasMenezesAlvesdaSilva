@@ -349,6 +349,7 @@ $("#formEsquece").on("submit", function (event) {
     success: function (response) {
       if (response.status === "success") {
         $("#formRecuperacao").css("display", "flex");
+        $(".close").css("display", "none");
       } else if (response.status === "errorUser") {
         $("#respostaEsqueceu").text("Usuário não encontrado!");
       } else if (response.status === "errorEmail") {
@@ -374,14 +375,13 @@ $("#formEsquece").on("submit", function (event) {
 
 // FUNÇÃO PARA ATUALIZAR A SENHA
 $("#formRecupera").on("submit", function (event) {
+  event.preventDefault();
   let pass = document.querySelector("#senha").value;
   let cPass = document.querySelector("#cSenha").value;
   let sPass = pass.length >= 8;
   let passwordsMatch = pass === cPass;
 
   if (passwordsMatch && sPass) {
-    event.preventDefault();
-
     let formData = new FormData(this);
 
     $.ajax({
@@ -421,6 +421,7 @@ $("#formRecupera").on("submit", function (event) {
 
 // FUNÇÃO PARA CADASTRAR NOVO USUÁRIO
 $("#formCadastro").on("submit", function (event) {
+  event.preventDefault();
   let pass = document.querySelector("#sen").value;
   let cPass = document.querySelector("#cSen").value;
   let user_cad = document.querySelector("#user_cad").value;
@@ -429,7 +430,6 @@ $("#formCadastro").on("submit", function (event) {
   let passwordsMatch = pass === cPass;
 
   if (passwordsMatch && sPass && sUser) {
-    event.preventDefault();
     let formData = new FormData(this);
 
     $.ajax({
@@ -646,6 +646,7 @@ document.getElementById("cSenha").addEventListener("input", apenasAlfabeticos);
 // FUNÇÃO PARA ABRIR A TELA DE LOGIN
 function abrir() {
   document.querySelector("#formSec").style.display = "flex";
+  document.querySelector("#formSec").style.transform = "translate(400px, 0)";
   if (window.innerWidth <= 900) {
     document.querySelector("#formPrin").style.display = "none";
   }
@@ -752,6 +753,23 @@ if (typeof pergunta === "undefined") {
 
   const indiceAleatorio = Math.floor(Math.random() * pergunta.length);
   const perguntaAleatoria = pergunta[indiceAleatorio];
+
+  if (perguntaAleatoria === "Qual o nome da sua mãe?") {
+    document.querySelector("#aleatoria").type = "text";
+    document.querySelector("#conf").type = "text";
+  }
+
+  if (perguntaAleatoria === "Qual a data do seu nascimento?") {
+    document.querySelector("#aleatoria").type = "date";
+    document.querySelector("#conf").type = "date";
+  }
+
+  if (perguntaAleatoria === "Qual o CEP do seu endereço?") {
+    document.querySelector("#aleatoria").type = "text";
+    document.querySelector("#conf").type = "text";
+    $("#aleatoria").mask("00000-000");
+    $("#conf").mask("00000-000");
+  }
 
   document.querySelector("#aleatoria").placeholder = perguntaAleatoria;
   document.querySelector("#conf").placeholder = perguntaAleatoria;

@@ -23,7 +23,7 @@ class cardapioModels
             JOIN historico ON produtos.idProdutos = historico.id_produto
             GROUP BY produtos.idProdutos
             ORDER BY total_produtos DESC
-            LIMIT 2
+            LIMIT 4
 
         ");
         $cmd->execute();
@@ -141,6 +141,31 @@ class cardapioModels
         return json_encode(['status' => 'success', 'message' => 'Produto removido do carrinho!']);
     }
 
+    public function setQuantidade($data)
+    {
+        $cmd_carrinho = $this->con->prepare("
+            SELECT id_carrinho FROM carrinho
+            WHERE id_usuario = ?
+        ");
+        $cmd_carrinho->execute([$_SESSION['id_usuario']]);
+        $id_carrinho = $cmd_carrinho->fetchColumn();
+
+        $itens = json_decode($data['itens'], true);
+
+        // Atualiza as quantidades de cada produto
+        foreach ($itens as $item) {
+            $cmd_itens_carrinho = $this->con->prepare("
+            UPDATE itens_carrinho
+            SET qtd = ?
+            WHERE id_carrinho = ?
+            AND id_produto = ?
+        ");
+            $cmd_itens_carrinho->execute([$item['qtd'], $id_carrinho, $item['id_produto']]);
+        }
+
+        return json_encode(['status' => 'success', 'message' => 'Quantidade atualizada!']);
+    }
+
     public function getValorTotal()
     {
         $cmd_valor = $this->con->prepare("
@@ -164,20 +189,6 @@ class cardapioModels
     ");
         $cmd_carrinho->execute([$_SESSION['id_usuario']]);
         $id_carrinho = $cmd_carrinho->fetchColumn();
-
-        // Decodifica os itens enviados como JSON
-        $itens = json_decode($data['itens'], true);
-
-        // Atualiza as quantidades de cada produto
-        foreach ($itens as $item) {
-            $cmd_itens_carrinho = $this->con->prepare("
-            UPDATE itens_carrinho
-            SET qtd = ?
-            WHERE id_carrinho = ?
-            AND id_produto = ?
-        ");
-            $cmd_itens_carrinho->execute([$item['qtd'], $id_carrinho, $item['id_produto']]);
-        }
 
         $cmd_pedido = $this->con->prepare("
         INSERT INTO pedidos (id_carrinho, valor_total, troco, forma_pagamento, tipo_entrega, situacao)

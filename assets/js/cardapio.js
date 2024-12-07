@@ -200,21 +200,21 @@ function getDestaques() {
       $(".destaques").empty();
       destaques.forEach((destaque) => {
         $(".destaques").append(`
-          <div class="destaque" onclick="getProdutoById(${
-            destaque.idProdutos
-          })">
-            <div class="prin">
-                <img src="${destaque.imagem}" alt="imagem do prato">
-                <div class="nome_desc">
-                    <h4>${destaque.nome}</h4>
-                    <p>${destaque.descricao}</p>
+              <div class="destaque" onclick="getProdutoById(${
+                destaque.idProdutos
+              })">
+                <div class="prin">
+                    <img src="${destaque.imagem}" alt="imagem do prato">
+                    <div class="nome_desc">
+                        <h4>${destaque.nome}</h4>
+                        <p>${destaque.descricao}</p>
+                    </div>
                 </div>
-            </div>
-            <p>${parseFloat(destaque.preco).toLocaleString("pt-BR", {
-              style: "currency",
-              currency: "BRL",
-            })}</p>
-          </div>
+                <p>${parseFloat(destaque.preco).toLocaleString("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                })}</p>
+              </div>
         `);
       });
     },
@@ -434,59 +434,77 @@ function getCarrinho() {
                     </div>
                 </div>
             `);
-        $(".itens_pedido").append(`
-            <p>${dado.qtd}X ${dado.nome}</p>
-            <p>${dado.obs}</p>
-            `);
+        atualizarResumo();
       });
-
-      // Função para atualizar o valor total
-      function atualizarValorTotal() {
-        // Recupera o valor da taxa da página e converte para número
-        let taxaTexto = $("#taxa")
-          .text()
-          .replace("Taxa:", "")
-          .replace("R$", "")
-          .trim();
-        taxaTexto = taxaTexto.replace(",", "."); // Converte a vírgula para ponto, se necessário
-        let taxa = parseFloat(taxaTexto); // Converte a taxa para número
-
-        $.ajax({
-          url: "cardapio/getValorTotal",
-          type: "GET",
-          dataType: "json",
-          success: function (valor) {
-            // Verifica se a forma de entrega é "entrega" e soma a taxa
-            let novo_valor =
-              parseFloat(valor) +
-              ($("#forma_entrega").val() == "entrega" ? taxa : 0);
-            localStorage.setItem("valor", novo_valor);
-
-            // Formata o valor final como moeda brasileira e exibe
-            $("#valor").text(
-              novo_valor.toLocaleString("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              })
-            );
-          },
-          error: function (xhr, status, error) {
-            console.log("Erro ao buscar valor: ", error);
-          },
-        });
-      }
-
-      // Chama a função de atualização ao carregar a página para garantir que o valor seja exibido corretamente inicialmente
-      $(document).ready(function () {
-        atualizarValorTotal();
-
-        // Atualiza o valor sempre que a forma de entrega for alterada
-        $("#forma_entrega").change(function () {
-          atualizarValorTotal();
-        });
-      });
-
+      atualizarValorTotal();
       getQuantidade();
+    },
+    error: function (xhr, status, error) {
+      console.log("Status: " + status);
+      console.log("Erro: " + error);
+      console.log("Resposta do servidor: " + xhr.responseText);
+    },
+  });
+}
+
+// Função para atualizar o valor total
+function atualizarValorTotal() {
+  // Recupera o valor da taxa da página e converte para número
+  let taxaTexto = $("#taxa")
+    .text()
+    .replace("Taxa:", "")
+    .replace("R$", "")
+    .trim();
+  taxaTexto = taxaTexto.replace(",", "."); // Converte a vírgula para ponto, se necessário
+  let taxa = parseFloat(taxaTexto); // Converte a taxa para número
+
+  $.ajax({
+    url: "cardapio/getValorTotal",
+    type: "GET",
+    dataType: "json",
+    success: function (valor) {
+      // Verifica se a forma de entrega é "entrega" e soma a taxa
+      let novo_valor =
+        parseFloat(valor) + ($("#forma_entrega").val() == "entrega" ? taxa : 0);
+      localStorage.setItem("valor", novo_valor);
+
+      // Formata o valor final como moeda brasileira e exibe
+      $("#valor").text(
+        novo_valor.toLocaleString("pt-BR", {
+          style: "currency",
+          currency: "BRL",
+        })
+      );
+    },
+    error: function (xhr, status, error) {
+      console.log("Erro ao buscar valor: ", error);
+    },
+  });
+}
+
+// Chama a função de atualização ao carregar a página para garantir que o valor seja exibido corretamente inicialmente
+$(document).ready(function () {
+  atualizarValorTotal();
+
+  // Atualiza o valor sempre que a forma de entrega for alterada
+  $("#forma_entrega").change(function () {
+    atualizarValorTotal();
+  });
+});
+
+function atualizarResumo() {
+  $.ajax({
+    url: "cardapio/getCarrinho", // Obtém os dados do carrinho
+    type: "GET",
+    dataType: "json",
+    success: function (dados) {
+      $(".itens_pedido").empty(); // Limpa o resumo atual
+      dados.forEach((dado) => {
+        $(".itens_pedido").append(`
+          <p>${dado.qtd}X ${dado.nome}</p>
+          <p>${dado.obs}</p>
+        `);
+      });
     },
     error: function (xhr, status, error) {
       console.log("Status: " + status);
@@ -499,6 +517,40 @@ function getCarrinho() {
 function formaPagamento() {
   $(".fundoCarrinho").css("display", "none");
   $("#fundo_pagamento").css("display", "flex");
+
+  let produtos = [];
+  document.querySelectorAll("#qtd_carrinho").forEach((item) => {
+    const qtd = item.querySelector("#qtd_uni").value;
+    const id_produto = item.querySelector("#id_produto").value;
+    produtos.push({ qtd, id_produto });
+
+    let formData = new FormData();
+
+    formData.append("itens", JSON.stringify(produtos));
+
+    $.ajax({
+      url: "cardapio/setQuantidade",
+      type: "POST",
+      data: formData,
+      contentType: false,
+      processData: false,
+      dataType: "json",
+      success: function (response) {
+        if (response.status === "success") {
+          getQuantidade();
+          atualizarResumo();
+          atualizarValorTotal();
+        } else {
+          alert("deu pau");
+        }
+      },
+      error: function (xhr, status, error) {
+        console.log("Status: " + status);
+        console.log("Erro: " + error);
+        console.log("Resposta do servidor: " + xhr.responseText);
+      },
+    });
+  });
 }
 
 function removerProduto(idProduto) {
@@ -618,19 +670,10 @@ function finalizar() {
   let valor = parseFloat(valorTexto);
   let troco = localStorage.getItem("troco");
 
-  // Coleta todas as quantidades e IDs de produtos
-  let produtos = [];
-  document.querySelectorAll("#qtd_carrinho").forEach((item) => {
-    const qtd = item.querySelector("#qtd_uni").value;
-    const id_produto = item.querySelector("#id_produto").value;
-    produtos.push({ id_produto, qtd });
-  });
-
   formData.append("pagamento", pagamento.value);
   formData.append("entrega", entrega.value);
   formData.append("valor", valor);
   formData.append("troco", troco);
-  formData.append("itens", JSON.stringify(produtos)); // Serializa os produtos em JSON
 
   $.ajax({
     url: "cardapio/finalizarPedido",

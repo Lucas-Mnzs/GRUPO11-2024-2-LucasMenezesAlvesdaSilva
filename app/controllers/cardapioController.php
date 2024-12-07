@@ -83,6 +83,13 @@ class cardapioController extends Controller
         echo $dados;
     }
 
+    public function setQuantidade()
+    {
+        $cardapioModel = new cardapioModels();
+        $dados = $cardapioModel->setQuantidade($_POST);
+        echo $dados;
+    }
+
     public function getValorTotal()
     {
         $cardapioModel = new cardapioModels();

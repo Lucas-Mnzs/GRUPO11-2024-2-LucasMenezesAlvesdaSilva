@@ -1,3 +1,5 @@
+let isClosed = false;
+
 function fechado() {
   $(".fundoFechado").css("display", "flex");
 }
@@ -12,8 +14,10 @@ function getSitu() {
       if (situacao.situacao === "Fechado") {
         fechado();
         $("body").css("overflow", "hidden");
+        isClosed = true;
       } else {
         $(".fundoFechado").css("display", "none");
+        isClosed = false;
       }
     },
     error: function (xhr, status, error) {
@@ -293,6 +297,11 @@ function getBebidas() {
 }
 
 function getProdutoById(id) {
+  if (isClosed) {
+    fecharComplemento();
+    fechado();
+    return;
+  }
   $.ajax({
     url: "cardapio/getProdutoById/" + id,
     type: "GET",
@@ -303,20 +312,20 @@ function getProdutoById(id) {
         $("body").css("overflow", "hidden");
         $("#complemento").empty();
         $("#complemento").append(`
-              <div id="imagemComp">
-                  <img src="${dado.imagem}" alt="Imagem do prato">
-              </div>
-              <div id="corpoComp">
-                  <div id="nome_desc_comp">
-                      <h1>${dado.nome}</h1>
-                      <p>${dado.descricao}</p>
-                  </div>
-                  <div id="respostaComp">
-                      <input type="text" name="inputcomplemento" id="inputComplemento" placeholder="Alguma observação?"><br>
-                      <button type="button" id="addProdutoBtn">Adicionar</button>
-                  </div>
-              </div>
-          `);
+                <div id="imagemComp">
+                    <img src="${dado.imagem}" alt="Imagem do prato">
+                </div>
+                <div id="corpoComp">
+                    <div id="nome_desc_comp">
+                        <h1>${dado.nome}</h1>
+                        <p>${dado.descricao}</p>
+                    </div>
+                    <div id="respostaComp">
+                        <input type="text" name="inputcomplemento" id="inputComplemento" placeholder="Alguma observação?"><br>
+                        <button type="button" id="addProdutoBtn">Adicionar</button>
+                    </div>
+                </div>
+            `);
 
         // Adiciona o evento de clique no botão
         $("#addProdutoBtn").on("click", function (event) {
@@ -383,6 +392,11 @@ function getQuantidade() {
 }
 
 function getCarrinho() {
+  if (isClosed) {
+    fecharCarrinho();
+    fechado();
+    return;
+  }
   $.ajax({
     url: "cardapio/getCarrinho",
     type: "GET",
@@ -394,46 +408,46 @@ function getCarrinho() {
         $(".fundoCarrinho").css("display", "flex");
         $("body").css("overflow", "hidden");
         $(".carrinho_corpo").append(`
-                <div id="produto_carrinho">
-                    <div id="imagem_infos_carrinho">
-                        <img src="${dado.imagem}">
-                    </div>
-                    <div id="valor_qtd_carrinho">
-                        <div id="infos_carrinho">
-                            <h1>${dado.nome}</h1>
-                            <p>${dado.descricao}</p>
-                        </div>
-                        <div id="direita" style="display: flex; align-items: center;">
-                          <div id="valor_uni_prod">
-                            <p id="valor_produto_carrinho">${parseFloat(
-                              dado.preco
-                            ).toLocaleString("pt-BR", {
-                              style: "currency",
-                              currency: "BRL",
-                            })}</p>
+                  <div id="produto_carrinho">
+                      <div id="imagem_infos_carrinho">
+                          <img src="${dado.imagem}">
+                      </div>
+                      <div id="valor_qtd_carrinho">
+                          <div id="infos_carrinho">
+                              <h1>${dado.nome}</h1>
+                              <p>${dado.descricao}</p>
                           </div>
-                          <div id="qtd_carrinho">
-                              <div id="qtd_remover">
-                          
-                                  <button type="button" id="somar" onclick="somar(this)">+</button>
-                                  <input type="number" name="qtd_uni" id="qtd_uni" readonly value="${
-                                    dado.qtd
-                                  }">
-                                  <button type="button" id="subtrair" onclick="subtrair(this)">-</button>
-                          
-                                  <button type="button" class="remover" onclick="removerProduto(${
-                                    dado.id_produto
-                                  })">Remover</button>
-                          
-                              </div>
-                              <input type="hidden" name="id_produto" id="id_produto" value="${
-                                dado.id_produto
-                              }">
+                          <div id="direita" style="display: flex; align-items: center;">
+                            <div id="valor_uni_prod">
+                              <p id="valor_produto_carrinho">${parseFloat(
+                                dado.preco
+                              ).toLocaleString("pt-BR", {
+                                style: "currency",
+                                currency: "BRL",
+                              })}</p>
+                            </div>
+                            <div id="qtd_carrinho">
+                                <div id="qtd_remover">
+                            
+                                    <button type="button" id="somar" onclick="somar(this)">+</button>
+                                    <input type="number" name="qtd_uni" id="qtd_uni" readonly value="${
+                                      dado.qtd
+                                    }">
+                                    <button type="button" id="subtrair" onclick="subtrair(this)">-</button>
+                            
+                                    <button type="button" class="remover" onclick="removerProduto(${
+                                      dado.id_produto
+                                    })">Remover</button>
+                            
+                                </div>
+                                <input type="hidden" name="id_produto" id="id_produto" value="${
+                                  dado.id_produto
+                                }">
+                            </div>
                           </div>
-                        </div>
-                    </div>
-                </div>
-            `);
+                      </div>
+                  </div>
+              `);
         atualizarResumo();
       });
       atualizarValorTotal();
@@ -515,6 +529,11 @@ function atualizarResumo() {
 }
 
 function formaPagamento() {
+  if (isClosed) {
+    fecharPagamento();
+    fechado();
+    return;
+  }
   $(".fundoCarrinho").css("display", "none");
   $("#fundo_pagamento").css("display", "flex");
 

@@ -34,6 +34,7 @@ class cardapioController extends Controller
                 if ($usuario) {
                     $_SESSION['id_usuario']   = $usuario['idUsuarios'];
                     $_SESSION['user']         = $usuario['usuario'];
+                    $_SESSION['nome']         = $usuario['pnome'];
                     $_SESSION['sobrenome']    = $usuario['sobrenome'];
                     $_SESSION['contato']      = $usuario['cell'];
                     $_SESSION['email']        = $usuario['email'];

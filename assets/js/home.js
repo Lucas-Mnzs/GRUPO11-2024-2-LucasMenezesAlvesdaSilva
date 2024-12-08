@@ -649,6 +649,8 @@ function abrir() {
   document.querySelector("#formSec").style.transform = "translate(400px, 0)";
   if (window.innerWidth <= 900) {
     document.querySelector("#formPrin").style.display = "none";
+    document.querySelector("#formSec").style.transform =
+      "translate(-50%, -50%)";
   }
 }
 

@@ -9,7 +9,11 @@ class painelAdminController extends Controller
 {
     public function index()
     {
-        $this->carregarView("painelAdmin");
+        if (isset($_SESSION['id_usuario'])) {
+            $this->carregarView("painelAdmin");
+        } else {
+            $this->carregarView("home");
+        }
     }
 
     public function abrir_fechar()

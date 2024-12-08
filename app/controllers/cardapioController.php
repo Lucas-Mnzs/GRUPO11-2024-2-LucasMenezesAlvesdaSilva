@@ -12,7 +12,11 @@ class cardapioController extends Controller
 {
     public function index()
     {
-        $this->carregarView("cardapio");
+        if (isset($_SESSION['id_usuario'])) {
+            $this->carregarView("cardapio");
+        } else {
+            $this->carregarView("home");
+        }
     }
 
     public function logoutUser()

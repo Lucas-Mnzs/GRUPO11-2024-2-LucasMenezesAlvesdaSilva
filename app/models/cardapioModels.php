@@ -23,7 +23,7 @@ class cardapioModels
             JOIN historico ON produtos.idProdutos = historico.id_produto
             GROUP BY produtos.idProdutos
             ORDER BY total_produtos DESC
-            LIMIT 4
+            LIMIT 2
 
         ");
         $cmd->execute();

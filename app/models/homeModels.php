@@ -55,7 +55,14 @@ class HomeModels
             $data['resposta'] === $usuario['nomeMae'] ||
             $data['resposta'] === $usuario['dataNascimento']
         ) {
+            if (!empty($data['remember'])) {
+                $token = bin2hex(random_bytes(32));
+                setcookie('remember_token', $token, time() + (86400 * 30), "/"); // Cookie válido por 30 dias
 
+                // Salve o token no banco de dados
+                $stmt = $this->con->prepare("UPDATE usuarios SET remember_token = ? WHERE idUsuarios = ? AND ativo = 'sim'");
+                $stmt->execute([$token, $_SESSION['id_usuario']]);
+            }
             $cmd_logs = $this->con->prepare("
                 INSERT INTO logs (id_usuario, acao)
                 VALUES (?, ?)

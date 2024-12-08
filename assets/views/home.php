@@ -44,7 +44,9 @@
     <section class="formCont" id="formSegunda">
         <form action="" id="formAut">
             <h1>Confirme a sua identidade</h1>
-            <input type="text" name="conf" id="conf">
+            <input type="text" name="conf" id="conf"><br>
+            <input type="checkbox" name="remember" id="remember" style="height: 12px; width: 12px;"> Me mantenha
+            conectado
             <p id="tentativas"></p>
             <button type="submit">Confirmar</button>
         </form>

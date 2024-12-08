@@ -4,15 +4,56 @@ namespace Name\Controllers;
 
 use Name\Core\Controller;
 use Dotenv\Dotenv;
+use Name\Models\Config\Conexao;
 use Name\Models\homeModels;
+use PDO;
 
 $dotenv = Dotenv::createImmutable(__DIR__ . '../../..');
 $dotenv->load();
 class homeController extends Controller
 {
+
+    private $con;
+
+    public function __construct()
+    {
+        $this->con = Conexao::getConexao();
+    }
+
     public function index()
     {
-        $this->carregarView("home");
+        if (!isset($_SESSION['id_usuario']) && isset($_COOKIE['remember_token'])) {
+            $token = $_COOKIE['remember_token'];
+
+            $stmt = $this->con->prepare("SELECT * FROM usuarios WHERE remember_token = ? AND ativo = 'sim'");
+            $stmt->execute([$token]);
+            $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($usuario) {
+                $_SESSION['id_usuario']   = $usuario['idUsuarios'];
+                $_SESSION['user']         = $usuario['usuario'];
+                $_SESSION['sobrenome']    = $usuario['sobrenome'];
+                $_SESSION['contato']      = $usuario['cell'];
+                $_SESSION['email']        = $usuario['email'];
+                $_SESSION['estado']       = $usuario['estado'];
+                $_SESSION['cidade']       = $usuario['cidade'];
+                $_SESSION['bairro']       = $usuario['bairro'];
+                $_SESSION['rua']          = $usuario['rua'];
+                $_SESSION['numero']       = $usuario['numero'];
+                $_SESSION['complemento']  = $usuario['complemento'];
+                $_SESSION['referencia']   = $usuario['referencia'];
+                $_SESSION['cep']          = $usuario['cep'];
+                $_SESSION['tipo_usuario'] = $usuario['tipo_usuario'];
+            }
+
+            if ($_SESSION['tipo_usuario'] === "master" || $_SESSION['tipo_usuario'] === "funcionario") {
+                $this->carregarView("painelAdmin");
+            } elseif ($_SESSION['tipo_usuario'] === "cliente") {
+                $this->carregarView("cardapio");
+            }
+        } else {
+            $this->carregarView("home");
+        }
     }
 
     public function consultarCEP()
@@ -83,8 +124,14 @@ class homeController extends Controller
 
     public function segundaAut()
     {
+        if (isset($_POST['remember'])) {
+            $token = $_POST['remember'];
+        } else {
+            $token = '';
+        }
         $data = [
-            'resposta' => $_POST['conf']
+            'resposta' => $_POST['conf'],
+            'remember'  =>  $token
         ];
 
         $homeModel = new homeModels();

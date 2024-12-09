@@ -53,8 +53,38 @@ function verificarCPF() {
  */
 
 // FUNÇÃO PARA BUSCAR O ENDEREÇO DE ACORDO COM O CEP
-function buscarCEP() {
-  let cep = document.querySelector(".cep").value;
+function cepHomeError() {
+  document.querySelector(".rua").value = "";
+  document.querySelector(".bairro").value = "";
+  document.querySelector(".num").value = "";
+  document.querySelector(".cidade").value = "";
+  document.querySelector(".estado").value = "";
+  document.querySelector("#resposta").textContent = "";
+  document.querySelector(".num").setAttribute("readonly", true);
+  document.querySelector(".cep").style.border = "1px solid red";
+  document.querySelector(".cep").style.filter =
+    "drop-shadow(0 0 5px rgb(173, 81, 81))";
+}
+
+let timeout; // Variável para controlar o atraso
+
+function cepInput() {
+  const cepInput = document.querySelector(".cep").value;
+
+  // Limpa o timeout anterior para evitar múltiplas execuções
+  clearTimeout(timeout);
+
+  // Define um novo timeout de 500ms após a última tecla pressionada
+  timeout = setTimeout(() => {
+    if (cepInput.length === 9) {
+      buscarCEP(cepInput);
+    } else {
+      cepHomeError();
+    }
+  }, 300);
+}
+
+function buscarCEP(cep) {
   if (cep != "") {
     let url = "https://brasilapi.com.br/api/cep/v1/" + cep;
     let req = new XMLHttpRequest();
@@ -74,36 +104,57 @@ function buscarCEP() {
           document.querySelector(".cep").style.border = "1px solid green";
           document.querySelector(".cep").style.filter =
             "drop-shadow(0 0 5px rgb(76, 248, 24))";
+          document.querySelector("#rua_cad").value = endereco.street;
+          document.querySelector("#bairro").value = endereco.neighborhood;
+          document.querySelector("#cidade").value = endereco.city;
+          document.querySelector("#estado").value = endereco.state;
+          document.querySelector("#cep").value = cep;
+          document.querySelector("#numero").removeAttribute("readonly");
+          document.querySelector("#cep").style.border = "1px solid green";
+          document.querySelector("#cep").style.filter =
+            "drop-shadow(0 0 5px rgb(76, 248, 24))";
         }
       } else {
-        document.querySelector(".rua").value = "";
-        document.querySelector(".bairro").value = "";
-        document.querySelector(".num").value = "";
-        document.querySelector(".cidade").value = "";
-        document.querySelector(".estado").value = "";
-        document.querySelector("#resposta").textContent = "";
-        document.querySelector(".num").setAttribute("readonly", true);
-        document.querySelector(".cep").style.border = "1px solid red";
-        document.querySelector(".cep").style.filter =
-          "drop-shadow(0 0 5px rgb(173, 81, 81))";
+        cepHomeError();
       }
     };
   } else {
-    document.querySelector(".rua").value = "";
-    document.querySelector(".bairro").value = "";
-    document.querySelector(".num").value = "";
-    document.querySelector(".cidade").value = "";
-    document.querySelector(".estado").value = "";
-    document.querySelector("#resposta").textContent = "";
-    document.querySelector(".num").setAttribute("readonly", true);
-    document.querySelector(".cep").style.border = "1px solid red";
-    document.querySelector(".cep").style.filter =
-      "drop-shadow(0 0 5px rgb(173, 81, 81))";
+    cepHomeError();
   }
 }
 
-function buscaCEP() {
-  let cep = document.querySelector("#cep").value;
+function cepCadError() {
+  document.querySelector("#rua_cad").value = "";
+  document.querySelector("#bairro").value = "";
+  document.querySelector("#numero").value = "";
+  document.querySelector("#cidade").value = "";
+  document.querySelector("#estado").value = "";
+  document.querySelector("#resposta").textContent = "";
+  document.querySelector("#numero").setAttribute("readonly", true);
+  document.querySelector("#cep").style.border = "1px solid red";
+  document.querySelector("#cep").style.filter =
+    "drop-shadow(0 0 5px rgb(173, 81, 81))";
+}
+
+let timeou; // Variável para controlar o atraso
+
+function cepInpu() {
+  const cepInpu = document.querySelector("#cep").value;
+
+  // Limpa o timeout anterior para evitar múltiplas execuções
+  clearTimeout(timeou);
+
+  // Define um novo timeout de 500ms após a última tecla pressionada
+  timeou = setTimeout(() => {
+    if (cepInpu.length === 9) {
+      buscaCEP(cepInpu);
+    } else {
+      cepCadError();
+    }
+  }, 300);
+}
+
+function buscaCEP(cep) {
   if (cep != "") {
     let url = "https://brasilapi.com.br/api/cep/v1/" + cep;
     let req = new XMLHttpRequest();
@@ -125,29 +176,11 @@ function buscaCEP() {
             "drop-shadow(0 0 5px rgb(76, 248, 24))";
         }
       } else {
-        document.querySelector("#rua_cad").value = "";
-        document.querySelector("#bairro").value = "";
-        document.querySelector("#numero").value = "";
-        document.querySelector("#cidade").value = "";
-        document.querySelector("#estado").value = "";
-        document.querySelector("#resposta").textContent = "";
-        document.querySelector("#numero").setAttribute("readonly", true);
-        document.querySelector("#cep").style.border = "1px solid red";
-        document.querySelector("#cep").style.filter =
-          "drop-shadow(0 0 5px rgb(173, 81, 81))";
+        cepCadError();
       }
     };
   } else {
-    document.querySelector("#rua_cad").value = "";
-    document.querySelector("#bairro").value = "";
-    document.querySelector("#numero").value = "";
-    document.querySelector("#cidade").value = "";
-    document.querySelector("#estado").value = "";
-    document.querySelector("#resposta").textContent = "";
-    document.querySelector("#numero").setAttribute("readonly", true);
-    document.querySelector("#cep").style.border = "1px solid red";
-    document.querySelector("#cep").style.filter =
-      "drop-shadow(0 0 5px rgb(173, 81, 81))";
+    cepCadError();
   }
 }
 
@@ -805,22 +838,3 @@ function mostrarLoad() {
 function esconderLoad() {
   $("#fundo_load").css("display", "none");
 }
-
-/**
- *
- *
- *
- *
- */
-
-// REDIRECIONAMENTO DE PÁGINAS
-$("#titulo").on("click", () => {
-  localStorage.setItem("ultimaPagina", "home");
-  $.ajax({
-    url: "home",
-    method: "POST",
-    success: function (response) {
-      $("#paginas").html(response);
-    },
-  });
-});

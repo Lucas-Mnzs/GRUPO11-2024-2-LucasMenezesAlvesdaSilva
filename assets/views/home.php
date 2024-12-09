@@ -16,7 +16,7 @@
         <form action="" class="formCont" id="formPrin">
             <h1>Verifique a Disponibilidade</h1><br>
             <label for="pesquisar" style="display: block;">Procure por seu endereço</label>
-            <input type="text" name="pesquisar" class="cep" placeholder="00000-000" onkeyup="buscarCEP()">
+            <input type="text" name="pesquisar" class="cep" placeholder="00000-000" oninput="cepInput()">
             <input type="text" name="rua" class="rua" placeholder="Rua" readonly>
             <input type="text" name="bairro" class="bairro" placeholder="Bairro" readonly>
             <input type="text" name="cidade" class="cidade" placeholder="Cidade" readonly>
@@ -107,7 +107,7 @@
                     <p id="erroEmail"></p>
                 </div>
                 <div class="inpu">
-                    <input type="text" name="cep" id="cep" onkeyup="buscaCEP()" placeholder="CEP">
+                    <input type="text" name="cep" id="cep" oninput="cepInpu()" placeholder="CEP">
                 </div>
                 <div class="inpu">
                     <input type="text" name="estado" id="estado" placeholder="Estado" readonly>

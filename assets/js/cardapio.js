@@ -49,8 +49,38 @@ $("#voltar_trocar").on("click", function () {
 
 $("#trocar_cep").mask("00000-000");
 
-function buscarCEP() {
-  let cep = document.querySelector("#trocar_cep").value;
+function cepError() {
+  document.querySelector("#trocar_rua").value = "";
+  document.querySelector("#trocar_bairro").value = "";
+  document.querySelector("#trocar_numero").value = "";
+  document.querySelector("#trocar_cidade").value = "";
+  document.querySelector("#trocar_estado").value = "";
+  document.querySelector("#res_trocar").textContent = "";
+  document.querySelector("#trocar_numero").setAttribute("readonly", true);
+  document.querySelector("#trocar_cep").style.border = "1px solid red";
+  document.querySelector("#trocar_cep").style.filter =
+    "drop-shadow(0 0 5px rgb(173, 81, 81))";
+}
+
+let timeout; // Variável para controlar o atraso
+
+function cepInput() {
+  const cepInput = document.querySelector("#trocar_cep").value;
+
+  // Limpa o timeout anterior para evitar múltiplas execuções
+  clearTimeout(timeout);
+
+  // Define um novo timeout de 500ms após a última tecla pressionada
+  timeout = setTimeout(() => {
+    if (cepInput.length === 9) {
+      buscarCEP(cepInput);
+    } else {
+      cepError();
+    }
+  }, 300);
+}
+
+function buscarCEP(cep) {
   if (cep != "") {
     let url = "https://brasilapi.com.br/api/cep/v1/" + cep;
     let req = new XMLHttpRequest();
@@ -74,29 +104,11 @@ function buscarCEP() {
             "drop-shadow(0 0 5px rgb(76, 248, 24))";
         }
       } else {
-        document.querySelector("#trocar_rua").value = "";
-        document.querySelector("#trocar_bairro").value = "";
-        document.querySelector("#trocar_numero").value = "";
-        document.querySelector("#trocar_cidade").value = "";
-        document.querySelector("#trocar_estado").value = "";
-        document.querySelector("#res_trocar").textContent = "";
-        document.querySelector("#trocar_numero").setAttribute("readonly", true);
-        document.querySelector("#trocar_cep").style.border = "1px solid red";
-        document.querySelector("#trocar_cep").style.filter =
-          "drop-shadow(0 0 5px rgb(173, 81, 81))";
+        cepError();
       }
     };
   } else {
-    document.querySelector("#trocar_rua").value = "";
-    document.querySelector("#trocar_bairro").value = "";
-    document.querySelector("#trocar_numero").value = "";
-    document.querySelector("#trocar_cidade").value = "";
-    document.querySelector("#trocar_estado").value = "";
-    document.querySelector("#res_trocar").textContent = "";
-    document.querySelector("#trocar_numero").setAttribute("readonly", true);
-    document.querySelector("#trocar_cep").style.border = "1px solid red";
-    document.querySelector("#trocar_cep").style.filter =
-      "drop-shadow(0 0 5px rgb(173, 81, 81))";
+    cepError();
   }
 }
 

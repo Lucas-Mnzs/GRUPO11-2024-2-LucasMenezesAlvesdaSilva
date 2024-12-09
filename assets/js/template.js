@@ -1,14 +1,3 @@
-$("#titulo").on("click", function () {
-  localStorage.setItem("ultimaPagina", "home");
-  $.ajax({
-    url: "home",
-    method: "GET",
-    success: function (response) {
-      $("#paginas").html(response);
-    },
-  });
-});
-
 function esconderLoad() {
   $("#fundo_load").css("display", "none");
 }

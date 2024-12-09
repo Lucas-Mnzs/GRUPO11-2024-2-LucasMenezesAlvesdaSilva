@@ -15,10 +15,10 @@
         <div id="load"></div>
     </div>
     <header id="topo">
-        <a href="" id="titulo">
+        <div id="titulo">
             <img src="assets/image/logo.png" alt="Logo">
             <h1>Cantinho Suam</h1>
-        </a>
+        </div>
     </header>
 
     <main id="paginas">

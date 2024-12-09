@@ -48,7 +48,15 @@ class painelAdminController extends Controller
                 if ($_SESSION['tipo_usuario'] === "master" || $_SESSION['tipo_usuario'] === "funcionario") {
                     $this->carregarView("painelAdmin");
                 } elseif ($_SESSION['tipo_usuario'] === "cliente") {
-                    $this->carregarView("cardapio");
+                    $taxaController = new taxaController;
+                    $taxa = $taxaController->getTaxa();
+
+                    if ($taxa) {
+                        $this->carregarView("cardapio");
+                        return json_encode(['status' => 'success']);
+                    } else {
+                        return json_encode(['status' => 'error', 'message' => 'Resposta de recuperação incorreta.']);
+                    }
                 }
             } else {
                 $this->carregarView("home");

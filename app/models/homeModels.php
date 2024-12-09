@@ -2,6 +2,7 @@
 
 namespace Name\Models;
 
+use Name\Controllers\taxaController;
 use Name\Models\Config\Conexao;
 use PDO;
 
@@ -70,20 +71,20 @@ class HomeModels
             $cmd_logs->execute([$_SESSION['id_usuario'], "A pergunta foi: $pergunta"]);
 
             if ($usuario['tipo_usuario'] === "master" || $usuario['tipo_usuario'] === "funcionario") {
-                $_SESSION['id_usuario']   = $usuario['idUsuarios'];
-                $_SESSION['user']         = $usuario['usuario'];
-                $_SESSION['sobrenome']    = $usuario['sobrenome'];
-                $_SESSION['contato']      = $usuario['cell'];
-                $_SESSION['email']        = $usuario['email'];
-                $_SESSION['estado']       = $usuario['estado'];
-                $_SESSION['cidade']       = $usuario['cidade'];
-                $_SESSION['bairro']       = $usuario['bairro'];
-                $_SESSION['rua']          = $usuario['rua'];
-                $_SESSION['numero']       = $usuario['numero'];
-                $_SESSION['complemento']  = $usuario['complemento'];
-                $_SESSION['referencia']   = $usuario['referencia'];
-                $_SESSION['cep']          = $usuario['cep'];
-                $_SESSION['tipo_usuario'] = $usuario['tipo_usuario'];
+                $_SESSION['id_usuario']      = $usuario['idUsuarios'];
+                $_SESSION['user']            = $usuario['usuario'];
+                $_SESSION['sobrenome']       = $usuario['sobrenome'];
+                $_SESSION['contato']         = $usuario['cell'];
+                $_SESSION['email']           = $usuario['email'];
+                $_SESSION['estado']          = $usuario['estado'];
+                $_SESSION['cidade']          = $usuario['cidade'];
+                $_SESSION['bairro']          = $usuario['bairro'];
+                $_SESSION['rua']             = $usuario['rua'];
+                $_SESSION['numero']          = $usuario['numero'];
+                $_SESSION['complemento']     = $usuario['complemento'];
+                $_SESSION['referencia']      = $usuario['referencia'];
+                $_SESSION['cep']             = $usuario['cep'];
+                $_SESSION['tipo_usuario']    = $usuario['tipo_usuario'];
                 return json_encode(['status' => 'successHost']);
             }
             $_SESSION['id_usuario']   = $usuario['idUsuarios'];
@@ -102,66 +103,14 @@ class HomeModels
             $_SESSION['cep']          = $usuario['cep'];
             $_SESSION['tipo_usuario'] = $usuario['tipo_usuario'];
 
-            $distanceKm = 0;
-            $cost = 0;
+            $taxaController = new taxaController;
+            $taxa = $taxaController->getTaxa();
 
-            $rua = $_SESSION['rua'] ?? '';
-            $bairro = $_SESSION['bairro'] ?? '';
-            $num = $_SESSION['numero'] ?? '';
-
-            $apiKey = $_ENV['API_KEY'];
-
-            $origin = 'Rua Doutor Furquim Mendes, 990, Vila Centenário';
-            $destination = $rua . ", " . $num . ", " . $bairro;
-
-            // Codifica os endereços para uso na URL
-            $originEncoded = urlencode($origin);
-            $destinationEncoded = urlencode($destination);
-
-            $url = "https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=$originEncoded&destinations=$destinationEncoded&key=$apiKey";
-
-            // Inicializa o cURL
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-            // Executa a requisição e obtém a resposta
-            $response = curl_exec($ch);
-
-            // Verifica se houve erro na requisição
-            if (curl_errno($ch)) {
-                return json_encode(['status' => 'erro', 'message' => curl_error($ch)]);
-            }
-
-            // Fecha o cURL
-            curl_close($ch);
-
-            // Decodifica a resposta JSON da API
-            $data = json_decode($response, true);
-
-            // Verifica se a requisição foi bem-sucedida
-            if ($data['status'] !== 'OK') {
-                return json_encode(['status' => 'erro', 'message' => 'Falha na requisição à API do Google']);
-            }
-
-            // Obtém a distância
-            $distanceKm = $data['rows'][0]['elements'][0]['distance']['value'] / 1000;
-
-            $ratePerKm = 1.00;
-
-            // Calcula o custo
-            $cost = $distanceKm * $ratePerKm;
-
-            if ($bairro == "Vila Centenário") {
-                $_SESSION['taxa'] = "R$ " . number_format(3, 2, ",", ".");
+            if ($taxa) {
+                return json_encode(['status' => 'success']);
             } else {
-                $fixedRate = 3.00; // Taxa fixa de R$3,00
-                $totalCost = $fixedRate + $cost; // Total em valor numérico
-                $_SESSION['taxa'] = "R$ " . number_format($totalCost, 2, ",", ".");
+                return json_encode(['status' => 'error', 'message' => 'Resposta de recuperação incorreta.']);
             }
-
-
-            return json_encode(['status' => 'success']);
         } else {
             return json_encode(['status' => 'error', 'message' => 'Resposta de recuperação incorreta.']);
         }

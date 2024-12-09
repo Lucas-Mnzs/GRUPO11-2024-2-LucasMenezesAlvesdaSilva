@@ -23,9 +23,13 @@ class homeController extends Controller
     public function index()
     {
         if (!isset($_SESSION['id_usuario']) && isset($_COOKIE['remember_token'])) {
-            $token = $_COOKIE['remember_token'];
+            $token = $_COOKIE['remember_token'] ?? '';
 
-            $stmt = $this->con->prepare("SELECT * FROM usuarios WHERE remember_token = ? AND ativo = 'sim'");
+            $stmt = $this->con->prepare("
+                SELECT usuarios.* FROM usuarios 
+                JOIN remember_tokens ON usuarios.idUsuarios = remember_tokens.user_id 
+                WHERE remember_tokens.token = ? AND remember_tokens.expires_at > NOW()
+            ");
             $stmt->execute([$token]);
             $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -44,6 +48,8 @@ class homeController extends Controller
                 $_SESSION['referencia']   = $usuario['referencia'];
                 $_SESSION['cep']          = $usuario['cep'];
                 $_SESSION['tipo_usuario'] = $usuario['tipo_usuario'];
+            } else {
+                setcookie('remember_token', '', time() - 3600, "/");
             }
 
             if ($_SESSION['tipo_usuario'] === "master" || $_SESSION['tipo_usuario'] === "funcionario") {

@@ -58,11 +58,15 @@ class HomeModels
         ) {
             if (!empty($data['remember'])) {
                 $token = bin2hex(random_bytes(32));
-                setcookie('remember_token', $token, time() + (86400 * 30), "/"); // Cookie válido por 30 dias
+                $expiresAt = date('Y-m-d H:i:s', time() + (86400 * 30)); // 30 dias
 
-                // Salve o token no banco de dados
-                $stmt = $this->con->prepare("UPDATE usuarios SET remember_token = ? WHERE idUsuarios = ? AND ativo = 'sim'");
-                $stmt->execute([$token, $_SESSION['id_usuario']]);
+                $stmt = $this->con->prepare("
+                    INSERT INTO remember_tokens (user_id, token, expires_at) 
+                    VALUES (?, ?, ?)
+                ");
+                $stmt->execute([$_SESSION['id_usuario'], $token, $expiresAt]);
+
+                setcookie('remember_token', $token, time() + (86400 * 30), "/");
             }
             $cmd_logs = $this->con->prepare("
                 INSERT INTO logs (id_usuario, acao)

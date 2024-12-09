@@ -22,9 +22,13 @@ class painelAdminController extends Controller
             $this->carregarView("painelAdmin");
         } else {
             if (!isset($_SESSION['id_usuario']) && isset($_COOKIE['remember_token'])) {
-                $token = $_COOKIE['remember_token'];
+                $token = $_COOKIE['remember_token'] ?? '';
 
-                $stmt = $this->con->prepare("SELECT * FROM usuarios WHERE remember_token = ? AND ativo = 'sim'");
+                $stmt = $this->con->prepare("
+                    SELECT usuarios.* FROM usuarios 
+                    JOIN remember_tokens ON usuarios.idUsuarios = remember_tokens.user_id 
+                    WHERE remember_tokens.token = ? AND remember_tokens.expires_at > NOW()
+                ");
                 $stmt->execute([$token]);
                 $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -84,10 +88,9 @@ class painelAdminController extends Controller
     public function logoutUser()
     {
         if (session_status() == PHP_SESSION_ACTIVE) {
-            if (isset($_SESSION['id_usuario'])) {
-                $stmt = $this->con->prepare("UPDATE usuarios SET remember_token = NULL WHERE idUsuarios = ?");
-                $stmt->execute([$_SESSION['id_usuario']]);
-            }
+            $token = $_COOKIE['remember_token'] ?? '';
+            $stmt = $this->con->prepare("DELETE FROM remember_tokens WHERE token = ?");
+            $stmt->execute([$token]);
 
             setcookie('remember_token', '', time() - 3600, "/"); // Expira o cookie
             session_destroy();

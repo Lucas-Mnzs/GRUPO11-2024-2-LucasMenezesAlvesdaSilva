@@ -8,7 +8,7 @@ $(document).ready(function () {
     // Redireciona para a página do cardápio se necessário
     $.ajax({
       url: "cardapio",
-      type: "GET",
+      type: "POST",
       success: function (response) {
         $("#paginas").html(response);
       },
@@ -16,7 +16,7 @@ $(document).ready(function () {
   } else if (localStorage.getItem("ultimaPagina") === "painelAdmin") {
     $.ajax({
       url: "painelAdmin",
-      type: "GET",
+      type: "POST",
       success: function (response) {
         $("#paginas").html(response);
       },
@@ -24,7 +24,7 @@ $(document).ready(function () {
   } else {
     $.ajax({
       url: "home",
-      type: "GET",
+      type: "POST",
       success: function (response) {
         $("#paginas").html(response);
       },

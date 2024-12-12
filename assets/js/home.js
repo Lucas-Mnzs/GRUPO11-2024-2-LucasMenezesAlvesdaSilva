@@ -66,16 +66,16 @@ function cepHomeError() {
     "drop-shadow(0 0 5px rgb(173, 81, 81))";
 }
 
-let timeout; // Variável para controlar o atraso
+var timeoutHome; // Variável para controlar o atraso
 
 function cepInput() {
   const cepInput = document.querySelector(".cep").value;
 
-  // Limpa o timeout anterior para evitar múltiplas execuções
-  clearTimeout(timeout);
+  // Limpa o timeoutHome anterior para evitar múltiplas execuções
+  clearTimeout(timeoutHome);
 
-  // Define um novo timeout de 500ms após a última tecla pressionada
-  timeout = setTimeout(() => {
+  // Define um novo timeoutHome de 500ms após a última tecla pressionada
+  timeoutHome = setTimeout(() => {
     if (cepInput.length === 9) {
       buscarCEP(cepInput);
     } else {
@@ -136,16 +136,16 @@ function cepCadError() {
     "drop-shadow(0 0 5px rgb(173, 81, 81))";
 }
 
-let timeou; // Variável para controlar o atraso
+var timeoutCadastro; // Variável para controlar o atraso
 
 function cepInpu() {
   const cepInpu = document.querySelector("#cep").value;
 
   // Limpa o timeout anterior para evitar múltiplas execuções
-  clearTimeout(timeou);
+  clearTimeout(timeoutCadastro);
 
   // Define um novo timeout de 500ms após a última tecla pressionada
-  timeou = setTimeout(() => {
+  timeoutCadastro = setTimeout(() => {
     if (cepInpu.length === 9) {
       buscaCEP(cepInpu);
     } else {

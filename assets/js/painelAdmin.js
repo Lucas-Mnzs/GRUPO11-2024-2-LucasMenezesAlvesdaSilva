@@ -824,7 +824,7 @@ function gerarListaCores(qtd) {
   return Array.from({ length: qtd }, gerarCorAleatoria);
 }
 
-let chartClientesVendas = null; // Variável global para armazenar o gráfico
+var chartClientesVendas = null; // Variável global para armazenar o gráfico
 
 function getClientesVendas() {
   $.ajax({
@@ -864,7 +864,7 @@ function getClientesVendas() {
   });
 }
 
-let chartPratosVendas = null;
+var chartPratosVendas = null;
 
 function getPratosVendas() {
   $.ajax({
@@ -904,7 +904,7 @@ function getPratosVendas() {
   });
 }
 
-let chartBebidasVendas = null;
+var chartBebidasVendas = null;
 
 function getBebidasVendas() {
   $.ajax({
@@ -944,7 +944,7 @@ function getBebidasVendas() {
   });
 }
 
-let chartVendasPeriodo = null;
+var chartVendasPeriodo = null;
 
 function getVendasPeriodo() {
   $.ajax({
@@ -994,7 +994,7 @@ function getVendasPeriodo() {
   });
 }
 
-let chartVendasPeriodoValor = null;
+var chartVendasPeriodoValor = null;
 
 function getVendasPeriodoValor() {
   $.ajax({

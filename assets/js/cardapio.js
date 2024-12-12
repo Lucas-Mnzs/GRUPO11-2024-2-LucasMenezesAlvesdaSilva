@@ -62,16 +62,16 @@ function cepError() {
     "drop-shadow(0 0 5px rgb(173, 81, 81))";
 }
 
-let timeout; // Variável para controlar o atraso
+let timeoutt; // Variável para controlar o atraso
 
 function cepInput() {
   const cepInput = document.querySelector("#trocar_cep").value;
 
-  // Limpa o timeout anterior para evitar múltiplas execuções
-  clearTimeout(timeout);
+  // Limpa o timeoutt anterior para evitar múltiplas execuções
+  clearTimeout(timeoutt);
 
-  // Define um novo timeout de 500ms após a última tecla pressionada
-  timeout = setTimeout(() => {
+  // Define um novo timeoutt de 500ms após a última tecla pressionada
+  timeoutt = setTimeout(() => {
     if (cepInput.length === 9) {
       buscarCEP(cepInput);
     } else {
@@ -746,11 +746,32 @@ function getSituacao() {
         dado.situacao == "O pedido foi finalizado!"
       ) {
         exibirSituacao(dado);
-        setInterval(function () {
+        recusadoFinalizado();
+        setTimeout(function () {
           fecharSituacao();
         }, 10000);
+      }
+    },
+    error: function (xhr, status, error) {
+      console.log("Status: " + status);
+      console.log("Erro: " + error);
+      console.log("Resposta do servidor: " + xhr.responseText);
+    },
+  });
+}
+
+function recusadoFinalizado() {
+  $.ajax({
+    url: "cardapio/recusadoFinalizado",
+    type: "POST",
+    processData: false,
+    contentType: false,
+    dataType: "json",
+    success: function (response) {
+      if (response.status === "success") {
+        console.log("Esconde a situação");
       } else {
-        fecharSituacao();
+        alert("deu pau!");
       }
     },
     error: function (xhr, status, error) {

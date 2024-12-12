@@ -180,6 +180,14 @@ class cardapioController extends Controller
         echo json_encode($dados);
     }
 
+    public function recusadoFinalizado()
+    {
+        $cardapioModel = new cardapioModels();
+        $dados = $cardapioModel->recusadoFinalizado();
+
+        echo $dados;
+    }
+
     public function getSitu()
     {
         $cardapioModels = new cardapioModels();

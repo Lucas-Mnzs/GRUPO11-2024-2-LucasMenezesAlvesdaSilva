@@ -224,13 +224,6 @@ class painelAdminModels
         ");
         $cmd_recusar->execute([$id_carrinho]);
 
-        $cmd_limpar_pedido = $this->con->prepare("
-            UPDATE pedidos
-            SET ativo = 'não'
-            WHERE id_carrinho = ?
-        ");
-        $cmd_limpar_pedido->execute([$id_carrinho]);
-
         $cmd_limpar_carrinho = $this->con->prepare("
             DELETE FROM itens_carrinho
             WHERE id_carrinho = ?
@@ -268,13 +261,6 @@ class painelAdminModels
                 WHERE id_carrinho = ?
             ");
         $cmd_finalizar->execute([$id_carrinho]);
-
-        $cmd_limpar_pedido = $this->con->prepare("
-            UPDATE pedidos
-            SET ativo = 'não'
-            WHERE id_carrinho = ?
-        ");
-        $cmd_limpar_pedido->execute([$id_carrinho]);
 
         $cmd_limpar_carrinho = $this->con->prepare("
             DELETE FROM itens_carrinho

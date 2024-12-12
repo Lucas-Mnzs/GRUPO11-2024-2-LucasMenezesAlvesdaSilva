@@ -290,6 +290,26 @@ class cardapioModels
         return $situacao;
     }
 
+    public function recusadoFinalizado()
+    {
+        $cmd_carrinho = $this->con->prepare("
+            SELECT id_carrinho
+            FROM carrinho
+            WHERE id_usuario = ?
+        ");
+        $cmd_carrinho->execute([$_SESSION['id_usuario']]);
+        $id_carrinho = $cmd_carrinho->fetchColumn();
+
+        $cmd_pedido = $this->con->prepare("
+            UPDATE pedidos
+            SET ativo = 'não'
+            WHERE id_carrinho = ?
+        ");
+        $cmd_pedido->execute([$id_carrinho]);
+
+        echo json_encode(['status' => 'success']);
+    }
+
     public function getSitu()
     {
         // Obter a situação atual do banco de dados

@@ -2,6 +2,7 @@
 
 namespace Name\Models;
 
+use Exception;
 use Name\Models\Config\Conexao;
 use PDO;
 
@@ -278,13 +279,14 @@ class cardapioModels
 
     public function getSituacao()
     {
+        $id_usuario = $_SESSION['id_usuario'];
         $cmd_situacao = $this->con->prepare("
             SELECT situacao
             FROM pedidos
             JOIN carrinho ON pedidos.id_carrinho = carrinho.id_carrinho
             WHERE carrinho.id_usuario = ? AND pedidos.ativo = 'sim'
         ");
-        $cmd_situacao->execute([$_SESSION['id_usuario']]);
+        $cmd_situacao->execute([$id_usuario]);
         $situacao = $cmd_situacao->fetch(PDO::FETCH_ASSOC);
 
         return $situacao;
@@ -322,5 +324,77 @@ class cardapioModels
 
         // Retorna a situação como string
         return $situ;
+    }
+
+    public function getInfos($id)
+    {
+        $dados = array();
+        $cmd = $this->con->prepare("
+            SELECT * FROM usuarios
+            WHERE idUsuarios = ?
+        ");
+        $cmd->execute([$id]);
+
+        $dados = $cmd->fetchAll(PDO::FETCH_ASSOC);
+
+        return $dados;
+    }
+
+    public function atualizarPerfil($id)
+    {
+        try {
+            // Atualize o banco de dados
+            $cmd = $this->con->prepare("
+            UPDATE usuarios
+            SET pnome = ?, sobrenome = ?, cpf = ?, cell = ?, email = ?
+            WHERE idUsuarios = ?
+        ");
+            $cmd->execute([
+                $_POST['nome'],
+                $_POST['sobrenome'],
+                $_POST['cpf'],
+                $_POST['numero'],
+                $_POST['email'],
+                $id
+            ]);
+
+            // Se o update foi bem-sucedido, atualize a sessão
+            if ($cmd->rowCount() > 0) {
+                $_SESSION['nome'] = $_POST['nome'];
+                $_SESSION['sobrenome'] = $_POST['sobrenome'];
+                $_SESSION['cpf'] = $_POST['cpf'];
+                $_SESSION['numero'] = $_POST['numero'];
+                $_SESSION['email'] = $_POST['email'];
+
+                // Retorne a mensagem de sucesso
+                echo json_encode(['status' => 'success']);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Nenhuma alteração realizada']);
+            }
+        } catch (Exception $e) {
+            // Trate erros e envie mensagem apropriada
+            echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function getPedidos($id)
+    {
+        $dados = array();
+        $cmd_historico = $this->con->prepare("
+            SELECT
+                historico.*,
+                GROUP_CONCAT(CONCAT(historico.qtd, 'x ', produtos.nome) SEPARATOR '<br>') AS produtos
+            FROM historico
+            JOIN usuarios ON historico.id_usuario = usuarios.idUsuarios
+            JOIN produtos ON historico.id_produto = produtos.idProdutos
+            WHERE usuarios.idUsuarios = ?
+            AND historico.ativo = 'sim'
+            GROUP BY historico.id_pedido, historico.data, historico.valor
+            ORDER BY historico.id_pedido DESC
+        ");
+        $cmd_historico->execute([$id]);
+        $dados = $cmd_historico->fetchAll(PDO::FETCH_ASSOC);
+
+        return $dados;
     }
 }

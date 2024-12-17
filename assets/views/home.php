@@ -35,7 +35,9 @@
             </div>
             <input type="text" name="user" id="user" placeholder="Usuário">
             <input type="password" name="pass" id="pass" placeholder="Senha">
-            <p id="respostaLogin"></p>
+            <div style="width: 100%; display: flex; justify-content: center;">
+                <p id="respostaLogin"></p>
+            </div>
             <p id="esqSenha" onclick="esqueceu()">Esqueceu a Senha?</p>
             <button type="submit" style="margin-bottom: 5px;">Entrar</button>
             <p id="cadas" onclick="cadastrar()">Cadastre-se</p>
@@ -47,7 +49,9 @@
             <input type="text" name="conf" id="conf"><br>
             <input type="checkbox" name="remember" id="remember" style="height: 12px; width: 12px;"> Me mantenha
             conectado
-            <p id="tentativas"></p>
+            <div style="width: 100%; display: flex; justify-content: center;">
+                <p id="tentativas"></p>
+            </div>
             <button type="submit">Confirmar</button>
         </form>
     </section>
@@ -60,7 +64,9 @@
             <input type="text" name="usuario" id="usuario" placeholder="Usuário">
             <input type="text" name="email" id="email" placeholder="E-mail">
             <input type="text" name="aleatoria" id="aleatoria">
-            <p id="respostaEsqueceu"></p>
+            <div style="width: 100%; display: flex; justify-content: center;">
+                <p id="respostaEsqueceu"></p>
+            </div>
             <button type="submit">Confirmar</button>
         </form>
     </section>
@@ -70,7 +76,9 @@
             <input type="password" name="senha" id="senha" placeholder="Digite a nova senha">
             <p id="respoSenha"></p>
             <input type="password" name="cSenha" id="cSenha" placeholder="Repita a senha">
-            <p id="respSenha"></p>
+            <div style="width: 100%; display: flex; justify-content: center;">
+                <p id="respSenha"></p>
+            </div>
             <button type="submit">Redefinir</button>
         </form>
     </section>
@@ -145,7 +153,7 @@
                 <p class="resposta"></p>
                 <div class="btn">
                     <button id="prox">Próximo</button>
-                    <button type="reset">Limpar</button>
+                    <button type="reset" id="limpar">Limpar</button>
                 </div>
             </form>
         </section>

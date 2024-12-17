@@ -36,8 +36,6 @@ class cardapioController extends Controller
                 $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
                 if ($usuario) {
-                    $_SESSION['id_usuario']   = $usuario['idUsuarios'];
-                    $_SESSION['user']         = $usuario['usuario'];
                     $_SESSION['nome']         = $usuario['pnome'];
                     $_SESSION['sobrenome']    = $usuario['sobrenome'];
                     $_SESSION['contato']      = $usuario['cell'];
@@ -195,5 +193,29 @@ class cardapioController extends Controller
 
         // Retorna a resposta como JSON
         echo json_encode(['situacao' => $dados]);
+    }
+
+    public function getInfos($id)
+    {
+        $cardapioModel = new cardapioModels();
+        $dados = $cardapioModel->getInfos($id);
+
+        echo json_encode($dados);
+    }
+
+    public function atualizarPerfil($id)
+    {
+        $cardapioModel = new cardapioModels();
+        $dados = $cardapioModel->atualizarPerfil($id);
+
+        echo $dados;
+    }
+
+    public function getPedidos($id)
+    {
+        $cardapioModel = new cardapioModels();
+        $dados = $cardapioModel->getPedidos($id);
+
+        echo json_encode($dados);
     }
 }

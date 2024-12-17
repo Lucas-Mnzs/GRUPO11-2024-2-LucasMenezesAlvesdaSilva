@@ -209,6 +209,13 @@ $("#formPrin").on("submit", function (event) {
         setTimeout(function () {
           esconderLoad();
           $("#resposta").text("Endereço atendido!");
+          $("#resposta").css("padding", "10px");
+          $("#resposta").css("text-align", "center");
+          $("#resposta").css("color", "green");
+          $("#resposta").css("background-color", "rgb(160, 252, 176)");
+          $("#resposta").css("text-align", "center");
+          $("#resposta").css("border-radius", "5px");
+          $("#resposta").css("margin-top", "15px");
           if (window.innerWidth < 900) {
             $("#formPrin").css("display", "none");
             $("#formSec").css("transform", "translate(-50%, -50%)");
@@ -221,6 +228,13 @@ $("#formPrin").on("submit", function (event) {
         setTimeout(function () {
           esconderLoad();
           $("#resposta").text("Endereço não atendido!");
+          $("#resposta").css("padding", "10px");
+          $("#resposta").css("text-align", "center");
+          $("#resposta").css("color", "darkred");
+          $("#resposta").css("background-color", "rgb(252, 160, 160)");
+          $("#resposta").css("text-align", "center");
+          $("#resposta").css("border-radius", "5px");
+          $("#resposta").css("margin-top", "15px");
           $("#formSec").css("display", "none");
           $("#formSec").css("transform", "translate(0, 0)");
         }, 2000);
@@ -263,8 +277,22 @@ $("#formUser").on("submit", function (event) {
         $("#respostaLogin").text("");
       } else if (response.status === "errorUser") {
         $("#respostaLogin").text("Usuário não encontrado!");
+        $("#respostaLogin").css("padding", "10px");
+        $("#respostaLogin").css("text-align", "center");
+        $("#respostaLogin").css("color", "darkred");
+        $("#respostaLogin").css("background-color", "rgb(252, 160, 160)");
+        $("#respostaLogin").css("text-align", "center");
+        $("#respostaLogin").css("border-radius", "5px");
+        $("#respostaLogin").css("margin-top", "15px");
       } else {
         $("#respostaLogin").text("Senha incorreta!");
+        $("#respostaLogin").css("padding", "10px");
+        $("#respostaLogin").css("text-align", "center");
+        $("#respostaLogin").css("color", "darkred");
+        $("#respostaLogin").css("background-color", "rgb(252, 160, 160)");
+        $("#respostaLogin").css("text-align", "center");
+        $("#respostaLogin").css("border-radius", "5px");
+        $("#respostaLogin").css("margin-top", "15px");
       }
     },
     error: function (xhr, status, error) {
@@ -301,6 +329,13 @@ $("#formAut").on("submit", function (event) {
       if (response.status === "success") {
         localStorage.setItem("ultimaPagina", "cardapio");
         $("#tentativas").text("Login efetuado!");
+        $("#tentativas").css("padding", "10px");
+        $("#tentativas").css("text-align", "center");
+        $("#tentativas").css("color", "green");
+        $("#tentativas").css("background-color", "rgb(160, 252, 176)");
+        $("#tentativas").css("text-align", "center");
+        $("#tentativas").css("border-radius", "5px");
+        $("#tentativas").css("margin-top", "15px");
         setTimeout(() => {
           $.ajax({
             url: "cardapio",
@@ -315,6 +350,13 @@ $("#formAut").on("submit", function (event) {
       } else if (response.status === "successHost") {
         localStorage.setItem("ultimaPagina", "painelAdmin");
         $("#tentativas").text("Login efetuado!");
+        $("#tentativas").css("padding", "10px");
+        $("#tentativas").css("text-align", "center");
+        $("#tentativas").css("color", "green");
+        $("#tentativas").css("background-color", "rgb(160, 252, 176)");
+        $("#tentativas").css("text-align", "center");
+        $("#tentativas").css("border-radius", "5px");
+        $("#tentativas").css("margin-top", "15px");
         setTimeout(() => {
           $.ajax({
             url: "painelAdmin",
@@ -344,12 +386,26 @@ function tratarErro() {
       $("#tentativas").text(
         `Resposta incorreta. Você ainda tem ${tentativasRestantes} tentativas restantes.`
       );
+      $("#tentativas").css("padding", "10px");
+      $("#tentativas").css("text-align", "center");
+      $("#tentativas").css("color", "darkred");
+      $("#tentativas").css("background-color", "rgb(252, 160, 160)");
+      $("#tentativas").css("text-align", "center");
+      $("#tentativas").css("border-radius", "5px");
+      $("#tentativas").css("margin-top", "15px");
     }, 2000);
   } else {
     mostrarLoad();
     $("#tentativas").text(
       "Você excedeu o número de tentativas. Voltando para a tela de login."
     );
+    $("#tentativas").css("padding", "10px");
+    $("#tentativas").css("text-align", "center");
+    $("#tentativas").css("color", "darkred");
+    $("#tentativas").css("background-color", "rgb(252, 160, 160)");
+    $("#tentativas").css("text-align", "center");
+    $("#tentativas").css("border-radius", "5px");
+    $("#tentativas").css("margin-top", "15px");
     setTimeout(() => {
       esconderLoad();
       $("#formSegunda").hide();
@@ -385,10 +441,31 @@ $("#formEsquece").on("submit", function (event) {
         $(".close").css("display", "none");
       } else if (response.status === "errorUser") {
         $("#respostaEsqueceu").text("Usuário não encontrado!");
+        $("#respostaEsqueceu").css("padding", "10px");
+        $("#respostaEsqueceu").css("text-align", "center");
+        $("#respostaEsqueceu").css("color", "darkred");
+        $("#respostaEsqueceu").css("background-color", "rgb(252, 160, 160)");
+        $("#respostaEsqueceu").css("text-align", "center");
+        $("#respostaEsqueceu").css("border-radius", "5px");
+        $("#respostaEsqueceu").css("margin-top", "15px");
       } else if (response.status === "errorEmail") {
         $("#respostaEsqueceu").text("Email não encontrado!");
+        $("#respostaEsqueceu").css("padding", "10px");
+        $("#respostaEsqueceu").css("text-align", "center");
+        $("#respostaEsqueceu").css("color", "darkred");
+        $("#respostaEsqueceu").css("background-color", "rgb(252, 160, 160)");
+        $("#respostaEsqueceu").css("text-align", "center");
+        $("#respostaEsqueceu").css("border-radius", "5px");
+        $("#respostaEsqueceu").css("margin-top", "15px");
       } else {
         $("#respostaEsqueceu").text("Resposta incorreta!");
+        $("#respostaEsqueceu").css("padding", "10px");
+        $("#respostaEsqueceu").css("text-align", "center");
+        $("#respostaEsqueceu").css("color", "darkred");
+        $("#respostaEsqueceu").css("background-color", "rgb(252, 160, 160)");
+        $("#respostaEsqueceu").css("text-align", "center");
+        $("#respostaEsqueceu").css("border-radius", "5px");
+        $("#respostaEsqueceu").css("margin-top", "15px");
       }
     },
     error: function (xhr, status, error) {
@@ -427,6 +504,13 @@ $("#formRecupera").on("submit", function (event) {
       success: function (response) {
         if (response.status === "success") {
           $("#respSenha").text("Senha alterada!");
+          $("#respSenha").css("padding", "10px");
+          $("#respSenha").css("text-align", "center");
+          $("#respSenha").css("color", "green");
+          $("#respSenha").css("background-color", "rgb(160, 252, 176)");
+          $("#respSenha").css("text-align", "center");
+          $("#respSenha").css("border-radius", "5px");
+          $("#respSenha").css("margin-top", "15px");
           setTimeout(() => {
             $("#formRecuperacao").css("display", "none");
             $("#formEsqueceu").css("display", "none");
@@ -434,6 +518,13 @@ $("#formRecupera").on("submit", function (event) {
           }, 2000);
         } else {
           $("#respSenha").text("Preencha todos os campos!");
+          $("#respSenha").css("padding", "10px");
+          $("#respSenha").css("text-align", "center");
+          $("#respSenha").css("color", "darkred");
+          $("#respSenha").css("background-color", "rgb(252, 160, 160)");
+          $("#respSenha").css("text-align", "center");
+          $("#respSenha").css("border-radius", "5px");
+          $("#respSenha").css("margin-top", "15px");
         }
       },
       error: function (xhr, status, error) {
@@ -475,6 +566,14 @@ $("#formCadastro").on("submit", function (event) {
       success: function (response) {
         if (response.status === "success") {
           $(".resposta").text("Cadastro efetuado!");
+          $(".resposta").css("padding", "10px");
+          $(".resposta").css("width", "100%");
+          $(".resposta").css("text-align", "center");
+          $(".resposta").css("color", "green");
+          $(".resposta").css("background-color", "rgb(160, 252, 176)");
+          $(".resposta").css("text-align", "center");
+          $(".resposta").css("border-radius", "5px");
+          $(".resposta").css("margin-top", "15px");
           setTimeout(() => {
             $("#formCad").css("display", "none");
             $("#formSec").css("display", "flex");
@@ -488,8 +587,6 @@ $("#formCadastro").on("submit", function (event) {
           $("#erroCell").text("Celular já cadastrado!");
         } else if (response.status === "errorCpf") {
           $("#erroCpf").text("CPF já cadastrado!");
-        } else {
-          $(".resposta").text("Preencha todos os campos!");
         }
       },
       error: function (xhr, status, error) {
@@ -498,6 +595,16 @@ $("#formCadastro").on("submit", function (event) {
         console.log("Resposta do servidor: " + xhr.responseText); // Exibe a resposta completa
       },
     });
+  } else {
+    $(".resposta").text("Preencha todos os campos!");
+    $(".resposta").css("padding", "10px");
+    $(".resposta").css("width", "100%");
+    $(".resposta").css("text-align", "center");
+    $(".resposta").css("color", "darkred");
+    $(".resposta").css("background-color", "rgb(252, 160, 160)");
+    $(".resposta").css("text-align", "center");
+    $(".resposta").css("border-radius", "5px");
+    $(".resposta").css("margin-top", "15px");
   }
 });
 

@@ -75,8 +75,6 @@ class HomeModels
             $cmd_logs->execute([$_SESSION['id_usuario'], "A pergunta foi: $pergunta"]);
 
             if ($usuario['tipo_usuario'] === "master" || $usuario['tipo_usuario'] === "funcionario") {
-                $_SESSION['id_usuario']      = $usuario['idUsuarios'];
-                $_SESSION['user']            = $usuario['usuario'];
                 $_SESSION['sobrenome']       = $usuario['sobrenome'];
                 $_SESSION['contato']         = $usuario['cell'];
                 $_SESSION['email']           = $usuario['email'];
@@ -91,8 +89,6 @@ class HomeModels
                 $_SESSION['tipo_usuario']    = $usuario['tipo_usuario'];
                 return json_encode(['status' => 'successHost']);
             }
-            $_SESSION['id_usuario']   = $usuario['idUsuarios'];
-            $_SESSION['user']         = $usuario['usuario'];
             $_SESSION['nome']         = $usuario['pnome'];
             $_SESSION['sobrenome']    = $usuario['sobrenome'];
             $_SESSION['contato']      = $usuario['cell'];
@@ -127,32 +123,39 @@ class HomeModels
         $cmd->execute();
         $usuario = $cmd->fetch(PDO::FETCH_ASSOC);
 
-        $_SESSION['id_usuario'] = $usuario['idUsuarios'];
-
+        // Verifica se o usuário foi encontrado
         if (!$usuario) {
             return json_encode(['status' => 'errorUser', 'message' => 'Usuário não encontrado.']);
         }
 
+        // Verifica se o email é correto
         if ($usuario['email'] !== $data['email']) {
             return json_encode(['status' => 'errorEmail', 'message' => 'E-mail incorreto.']);
         }
 
+        // Verifica se a resposta de recuperação está correta
         if (
             $data['resposta'] === $usuario['cep'] ||
             $data['resposta'] === $usuario['nomeMae'] ||
             $data['resposta'] === $usuario['dataNascimento']
         ) {
+            // Armazena informações na sessão apenas se a recuperação for bem-sucedida
+            $_SESSION['id_usuario'] = $usuario['idUsuarios'];
             $_SESSION['usuario'] = $data['user'];
+
+            // Registra o log de alteração
             $cmd_logs = $this->con->prepare("
-                INSERT INTO logs (id_usuario, acao)
-                VALUES (?, ?)
-            ");
+            INSERT INTO logs (id_usuario, acao)
+            VALUES (?, ?)
+        ");
             $cmd_logs->execute([$_SESSION['id_usuario'], "Senha Alterada!"]);
+
             return json_encode(['status' => 'success']);
         } else {
             return json_encode(['status' => 'error', 'message' => 'Resposta de recuperação incorreta.']);
         }
     }
+
 
     public function atualizarSenha($data)
     {

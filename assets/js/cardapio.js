@@ -1,4 +1,4 @@
-let isClosed = false;
+localStorage.setItem("aberto", false);
 
 function fechado() {
   $(".fundoFechado").css("display", "flex");
@@ -14,10 +14,11 @@ function getSitu() {
       if (situacao.situacao === "Fechado") {
         fechado();
         $("body").css("overflow", "hidden");
-        isClosed = true;
+        localStorage.setItem("aberto", true);
       } else {
+        $("body").css("overflow", "auto");
         $(".fundoFechado").css("display", "none");
-        isClosed = false;
+        localStorage.setItem("aberto", false);
       }
     },
     error: function (xhr, status, error) {
@@ -28,13 +29,135 @@ function getSitu() {
   });
 }
 
-function mostrarDer() {
-  $("#der").css("display", "flex");
+function mostrarPerfil(id) {
+  $("#perfil").css("display", "flex");
   $("body").css("overflow", "hidden");
+  $.ajax({
+    url: "cardapio/getInfos/" + id,
+    type: "GET",
+    dataType: "json",
+    success: function (dados) {
+      $("#dados").empty();
+      dados.forEach((dado) => {
+        $("#dados").append(`
+          <input type="text" name="nome_perfil" id="nome_perfil" placeholder="Nome" value="${dado.pnome}">
+          <input type="text" name="sobrenome_perfil" id="sobrenome_perfil" placeholder="Sobrenome" value="${dado.sobrenome}">
+          <input type="text" name="email_perfil" id="email_perfil" placeholder="E-mail" value="${dado.email}">
+          <input type="text" name="numero_perfil" id="numero_perfil" placeholder="Contato" value="${dado.cell}">
+          <input type="text" name="cpf_perfil" id="cpf_perfil" readonly value="${dado.cpf}">
+          <button type="button" onclick="atualizarPerfil(${dado.idUsuarios})">Atualizar</button>
+          <div id="logout" onclick="logout()">
+              <p>Sair</p>
+          </div>
+        `);
+      });
+    },
+    error: function (xhr, status, error) {
+      console.log("Status: " + status); // Mostra o status do erro
+      console.log("Erro: " + error); // Mostra a descrição do erro
+      console.log("Resposta do servidor: " + xhr.responseText); // Exibe a resposta completa
+    },
+  });
 }
 
-function esconderDer() {
-  $("#der").css("display", "none");
+function atualizarPerfil(id) {
+  let formData = new FormData();
+
+  let nome = $("#nome_perfil").val();
+  let sobrenome = $("#sobrenome_perfil").val();
+  let email = $("#email_perfil").val();
+  let numero = $("#numero_perfil").val();
+  let cpf = $("#cpf_perfil").val();
+
+  formData.append("nome", nome);
+  formData.append("sobrenome", sobrenome);
+  formData.append("email", email);
+  formData.append("numero", numero);
+  formData.append("cpf", cpf);
+  $.ajax({
+    url: "cardapio/atualizarPerfil/" + id,
+    type: "POST",
+    data: formData,
+    processData: false,
+    contentType: false,
+    dataType: "json",
+    success: function (response) {
+      if ((response.status = "success")) {
+        $("#resposta_perfil").text("Usuário atualizado");
+        $("#resposta_perfil").css("width", "100%");
+        $("#resposta_perfil").css("text-align", "center");
+        $("#resposta_perfil").css("color", "green");
+        $("#resposta_perfil").css("background-color", "rgb(160, 252, 176)");
+        $("#resposta_perfil").css("border-radius", "5px");
+        $("#resposta_perfil").css("padding", "10px");
+        mostrarPerfil();
+      } else {
+        alert("deu pau!");
+      }
+    },
+  });
+}
+
+function getPedidos(id) {
+  $("#pedidos").css("display", "flex");
+  $("body").css("overflow", "hidden");
+  $("#historico").empty();
+
+  $.ajax({
+    url: "cardapio/getPedidos/" + id,
+    type: "GET",
+    dataType: "json",
+    success: function (dados) {
+      dados.forEach((dado) => {
+        const dataBruta = dado.data; // Exemplo: "2024-12-11"
+        const [ano, mes, dia] = dataBruta.split("-"); // Divide a data no formato YYYY-MM-DD
+        const dataFormatada = `${dia}/${mes}/${ano}`; // Reorganiza para DD/MM/AAAA
+        $("#historico").append(`
+          <div id="historico_pedidos">
+              <div id="concluido">
+                  <div id="check">
+                    <img src="assets/image/check.png" alt="Check">
+                    <p>Pedido concluído</p>
+                  </div>
+                  <p>Nº · ${dado.id_pedido}</p>
+              </div>
+              <hr>
+              <div id="conteudo">
+                  <p id="conteudo_pedido">${dado.produtos}</p>
+              </div>
+              <hr>
+              <div id="data_valor">
+                  <p id="data_pedidos">${dataFormatada}</p>
+                  <p id="data_pedidos">${parseFloat(dado.valor).toLocaleString(
+                    "pt-BR",
+                    {
+                      style: "currency",
+                      currency: "BRL",
+                    }
+                  )}</p>
+              </div>
+          </div>      
+        `);
+      });
+    },
+    error: function (xhr, status, error) {
+      console.log("Status: " + status); // Mostra o status do erro
+      console.log("Erro: " + error); // Mostra a descrição do erro
+      console.log("Resposta do servidor: " + xhr.responseText); // Exibe a resposta completa
+    },
+  });
+}
+
+function esconderPedidos() {
+  $("#pedidos").css("display", "none");
+  $("body").css("overflow", "auto");
+}
+
+function esconderPerfil() {
+  $("#perfil").css("display", "none");
+  $("body").css("overflow", "auto");
+  $("#resposta_perfil").text("");
+  $("#resposta_perfil").css("padding", "0px");
 }
 
 function abrirTroca() {
@@ -62,16 +185,16 @@ function cepError() {
     "drop-shadow(0 0 5px rgb(173, 81, 81))";
 }
 
-let timeoutt; // Variável para controlar o atraso
+var timeoute; // Variável para controlar o atraso
 
 function cepInput() {
   const cepInput = document.querySelector("#trocar_cep").value;
 
   // Limpa o timeoutt anterior para evitar múltiplas execuções
-  clearTimeout(timeoutt);
+  clearTimeout(timeoute);
 
   // Define um novo timeoutt de 500ms após a última tecla pressionada
-  timeoutt = setTimeout(() => {
+  timeoute = setTimeout(() => {
     if (cepInput.length === 9) {
       buscarCEP(cepInput);
     } else {
@@ -178,7 +301,7 @@ $("#trocar_endereco").on("click", function () {
   }
 });
 
-$("#logout").on("click", function () {
+function logout() {
   $.ajax({
     url: "cardapio/logoutUser",
     type: "POST",
@@ -205,7 +328,7 @@ $("#logout").on("click", function () {
       console.log("Resposta do servidor: " + xhr.responseText); // Exibe a resposta completa
     },
   });
-});
+}
 
 function getDestaques() {
   $.ajax({
@@ -309,7 +432,7 @@ function getBebidas() {
 }
 
 function getProdutoById(id) {
-  if (isClosed) {
+  if (localStorage.getItem("aberto") == true) {
     fecharComplemento();
     fechado();
     return;
@@ -390,7 +513,8 @@ function getQuantidade() {
     dataType: "json",
     success: function (qtd) {
       $(".qtd").text(qtd);
-      if ($(".qtd").text() == "") {
+      $("#qtd").text(qtd);
+      if ($(".qtd").text() == "" || $("#qtd").text() == "") {
         $(".fundoCarrinho").css("display", "none");
         $("body").css("overflow", "auto");
       }
@@ -404,7 +528,7 @@ function getQuantidade() {
 }
 
 function getCarrinho() {
-  if (isClosed) {
+  if (localStorage.getItem("aberto") == true) {
     fecharCarrinho();
     fechado();
     return;
@@ -541,7 +665,7 @@ function atualizarResumo() {
 }
 
 function formaPagamento() {
-  if (isClosed) {
+  if (localStorage.getItem("aberto") == true) {
     fecharPagamento();
     fechado();
     return;
@@ -632,9 +756,9 @@ $("#forma_pagamento").change(function () {
   }
 });
 
-let rua = $("#rua_num p ").text();
+var rua = $("#rua_num p ").text();
 
-let bairro = $("#bairro_cidade_estado p").text();
+var bairro = $("#bairro_cidade_estado p").text();
 
 $("#forma_entrega").change(function () {
   if ($("#forma_entrega").val() == "entrega") {

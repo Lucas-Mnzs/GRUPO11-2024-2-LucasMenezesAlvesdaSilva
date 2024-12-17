@@ -12,21 +12,36 @@
     <div id="fundo_load">
         <div id="load"></div>
     </div>
-    <div id="logout">
-        <p>Sair</p>
-    </div>
     <div class="carrinhoIcon" onclick="getCarrinho()">
         <img src="assets/image/carrinho.png" alt="Carrinho">
         <div class="qtd">0</div>
     </div>
+    <div class="pedidos" onclick="getPedidos(<?php echo $_SESSION['id_usuario'] ?>)">
+        <img src="assets/image/order.png" alt="Pedidos">
     </div>
-    <div class="der" onclick="mostrarDer()">
-        <img src="assets/image/der.png" alt="Diagrama Icon">
+    <div class="perfil" onclick="mostrarPerfil(<?php echo $_SESSION['id_usuario'] ?>)">
+        <img src="assets/image/perfil.png" alt="Diagrama Icon">
     </div>
-    <div id="der">
-        <div id="der_img">
-            <img src="assets/image/diagrama.png" alt="Diagrama">
-            <img src="assets/image/close.png" alt="Fechar diagrama" id="closeDiagrama" onclick="esconderDer()">
+    <div id="pedidos">
+        <div id="pedidos_fundo">
+            <img src="assets/image/close.png" alt="Fechar pedidos" id="closePedido" onclick="esconderPedidos()">
+            <div id="dados_pedidos">
+                <h1 style="text-align: center;">Seus pedidos</h1>
+                <div id="historico">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="perfil">
+        <div id="perfil_fundo">
+            <img src="assets/image/close.png" alt="Fechar perfil" id="closePerfil" onclick="esconderPerfil()">
+            <div id="dados_perfil">
+                <h1 style="text-align: center;">Dados do perfil</h1>
+                <div id="dados">
+                </div>
+                <p id="resposta_perfil" style="margin-bottom: 15px;"></p>
+            </div>
         </div>
     </div>
     <div class="complemento" onclick="fecharComplemento()">
@@ -163,7 +178,7 @@
         </div>
         <div id="informacoes">
             <div id="hora_aberto">
-                <p id="hora">Funcionamento: 11 - 15h</p>
+                <p id="hora">Funcionamento: 11 - 15h <?php echo $_SESSION['id_usuario'] ?></p>
                 <p id="situacao_aberto"></p>
             </div>
             <div id="entrega_taxa">
@@ -203,6 +218,18 @@
             </div>
         </div>
     </section>
+    <div id="navegacao">
+        <div class="topicos" onclick="getPedidos(<?php echo $_SESSION['id_usuario'] ?>)">
+            <img src="assets/image/order.png" alt="Pedidos">
+        </div>
+        <div class="topicos" onclick="getCarrinho()">
+            <img src="assets/image/carrinho.png" alt="Carrinho">
+            <div id="qtd">0</div>
+        </div>
+        <div class="topicos" onclick="mostrarPerfil(<?php echo $_SESSION['id_usuario'] ?>)">
+            <img src="assets/image/perfil.png" alt="Perfil">
+        </div>
+    </div>
     <footer>
         <hr>
         <div id="conteudo_footer">
@@ -228,11 +255,14 @@
                     </div>
                 </div>
             </div>
-            <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3678.8335259780206!2d-43.31605242516302!3d-22.771558533051206!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x997aa3bcff72fb%3A0x77d5c3defa357629!2sR.%20Dr.%20Furquim%20Mendes%2C%20990%20-%20Vila%20Centenario%2C%20Duque%20de%20Caxias%20-%20RJ%2C%2025030-170!5e0!3m2!1spt-BR!2sbr!4v1733319413632!5m2!1spt-BR!2sbr"
-                width="300" height="200" style="border:5px;" allowfullscreen="" loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
+            <div id="endereco">
+                <h1 style="text-align: center; margin-bottom: 5px;">Nosso endereço</h1>
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3678.8335259780206!2d-43.31605242516302!3d-22.771558533051206!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x997aa3bcff72fb%3A0x77d5c3defa357629!2sR.%20Dr.%20Furquim%20Mendes%2C%20990%20-%20Vila%20Centenario%2C%20Duque%20de%20Caxias%20-%20RJ%2C%2025030-170!5e0!3m2!1spt-BR!2sbr!4v1733319413632!5m2!1spt-BR!2sbr"
+                    width="300" height="200" style="border-radius:5px; border: none;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
         </div>
         <hr>
         <div id="copy">

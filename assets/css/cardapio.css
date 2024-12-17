@@ -4,13 +4,10 @@
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.274);
   border-radius: 5px;
   padding: 7.5px 20px;
-  position: fixed;
-  top: 25px;
-  right: 30px;
   color: white;
-  z-index: 9991;
-  font-size: 1em;
   transition: 0.3s;
+  margin-top: 15px;
+  text-align: center;
 }
 
 #logout:hover {
@@ -33,13 +30,14 @@
 #imgPrin img {
   margin: auto;
   display: block;
-  width: 95%;
+  width: 100%;
   height: auto;
   border-radius: 5px;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.384);
 }
 
 .usuario {
+  width: 100%;
   font-size: 1.2em;
   margin: -45px 30px 30px 0;
   text-align: center;
@@ -181,7 +179,8 @@
 #fundo_endereco,
 #fundo_load,
 .fundoFechado,
-#der {
+#perfil,
+#pedidos {
   background-color: rgba(0, 0, 0, 0.377);
   height: 100vh;
   width: 100%;
@@ -192,21 +191,109 @@
   position: fixed;
 }
 
-#closeDiagrama {
+#closePerfil,
+#closePedido {
   cursor: pointer;
   position: absolute;
-  left: 15px;
+  left: 5px;
+  top: 7px;
   width: 50px;
 }
 
-#der_img {
+#historico_pedidos {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid rgb(177, 177, 177);
+  border-radius: 5px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.144);
+}
+
+#concluido {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#check {
+  display: flex;
+  align-items: center;
+}
+
+#check img {
+  margin-right: 5px;
+  height: 20px;
+  width: 20px;
+}
+
+#data_valor {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#perfil_fundo,
+#pedidos_fundo {
   position: relative;
   border-radius: 5px;
+  background-color: white;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.301);
   max-width: 95%;
   z-index: 9993;
   max-height: 80vh;
   overflow-y: auto;
+}
+
+#dados {
+  display: flex;
+  flex-direction: column;
+}
+
+#dados input {
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid rgb(219, 219, 219);
+  outline: none;
+  transition: 0.3s;
+}
+
+#dados button {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: rgb(53, 31, 31);
+  color: white;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+#dados button:hover {
+  background-color: rgb(77, 45, 45);
+}
+
+#cpf_perfil {
+  background-color: lightgray;
+}
+
+#cpf_perfil:focus {
+  border: none;
+  filter: none;
+}
+
+#dados input:focus {
+  border: 1px solid rgb(53, 31, 31);
+  filter: drop-shadow(0 0 2px rgb(77, 45, 45));
+}
+
+#dados_perfil,
+#dados_pedidos {
+  padding: 15px;
+}
+
+#dados_perfil h1,
+#dados_pedidos h1 {
+  margin: 0 55px;
+  margin-bottom: 15px;
 }
 
 .fechado_corpo {
@@ -458,7 +545,27 @@ input[type="number"]::-webkit-inner-spin-button {
   transform: scale(1.02);
 }
 
-.der {
+.pedidos {
+  position: fixed;
+  bottom: 215px;
+  right: 35px;
+  background-color: rgb(77, 45, 45);
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  cursor: pointer;
+}
+
+.pedidos img {
+  height: 40px;
+  width: 40px;
+}
+
+.perfil {
   position: fixed;
   bottom: 125px;
   right: 35px;
@@ -471,6 +578,11 @@ input[type="number"]::-webkit-inner-spin-button {
   align-items: center;
   z-index: 100;
   cursor: pointer;
+}
+
+.perfil img {
+  width: 50px;
+  height: 50px;
 }
 
 .carrinhoIcon {
@@ -665,6 +777,45 @@ input[type="number"]::-webkit-inner-spin-button {
   }
 }
 
+#qtd {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: white;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#navegacao {
+  position: fixed;
+  bottom: 0;
+  display: none;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.topicos {
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(53, 31, 31);
+  padding: 5px;
+  transition: 0.3s;
+}
+
+.topicos:hover {
+  background-color: rgb(77, 45, 45);
+}
+
+.topicos img {
+  height: 40px;
+  width: 40px;
+}
+
 footer {
   background-color: rgb(2, 0, 26);
   width: 100%;
@@ -765,6 +916,43 @@ hr {
 
 /* Layout responsivo para telas menores */
 @media (max-width: 768px) {
+  #qtd {
+    display: flex;
+    margin-left: 55px;
+    height: 25px;
+    width: 25px;
+  }
+
+  #navegacao {
+    display: flex;
+  }
+
+  .carrinhoIcon,
+  .pedidos,
+  .perfil {
+    display: none;
+  }
+
+  #categorias {
+    margin: 0;
+    margin-bottom: 30px;
+  }
+
+  #pratos h2,
+  #bebidas h2,
+  #destaques h2 {
+    text-indent: 0;
+    font-size: 1.25em;
+  }
+
+  #informacoes {
+    margin-top: -20px;
+  }
+
+  .usuario {
+    margin-top: -65px;
+  }
+
   #informacoes {
     grid-template-columns: 1fr; /* Uma única coluna */
   }
@@ -780,6 +968,36 @@ hr {
 }
 
 @media (max-width: 700px) {
+  #qtd {
+    margin-left: 55px;
+    height: 25px;
+    width: 25px;
+  }
+
+  #corpo {
+    padding-top: 1px;
+  }
+
+  #categorias {
+    margin: 0;
+    margin-bottom: 30px;
+  }
+
+  #pratos h2,
+  #bebidas h2,
+  #destaques h2 {
+    text-indent: 0;
+    font-size: 1.25em;
+  }
+
+  #informacoes {
+    margin-top: -20px;
+  }
+
+  .usuario {
+    margin-top: -65px;
+  }
+
   #logout {
     padding: 7.5px 20px;
     font-size: 0.8em;
@@ -788,13 +1006,80 @@ hr {
 }
 
 @media (max-width: 600px) {
+  #qtd {
+    margin-left: 55px;
+    height: 25px;
+    width: 25px;
+  }
+
+  #corpo {
+    padding-top: 1px;
+  }
+
+  #categorias {
+    margin: 0;
+    margin-bottom: 30px;
+  }
+
+  #pratos h2,
+  #bebidas h2,
+  #destaques h2 {
+    text-indent: 0;
+    font-size: 1.25em;
+  }
+
+  #informacoes {
+    margin-top: -20px;
+  }
+
+  .usuario {
+    margin-top: -65px;
+  }
+
   #logout {
     font-size: 0.8em;
     top: 55px;
   }
+
+  #corpo {
+    padding-top: 5px;
+  }
 }
 
 @media (max-width: 510px) {
+  #qtd {
+    margin-left: 45px;
+  }
+
+  .topicos img {
+    height: 30px;
+    width: 30px;
+  }
+
+  #corpo {
+    padding-top: 1px;
+  }
+
+  #categorias {
+    margin: 0;
+    margin-bottom: 30px;
+  }
+
+  #pratos h2,
+  #bebidas h2,
+  #destaques h2 {
+    text-indent: 0;
+    font-size: 1.25em;
+  }
+
+  #informacoes {
+    margin-top: -20px;
+  }
+
+  .usuario {
+    margin-top: -65px;
+  }
+
   .prato img,
   .bebida img,
   .destaque img {
@@ -821,6 +1106,34 @@ hr {
 }
 
 @media (max-width: 490px) {
+  #qtd {
+    margin-left: 45px;
+  }
+
+  #corpo {
+    padding-top: 1px;
+  }
+
+  #categorias {
+    margin: 0;
+    margin-bottom: 30px;
+  }
+
+  #pratos h2,
+  #bebidas h2,
+  #destaques h2 {
+    text-indent: 0;
+    font-size: 1.25em;
+  }
+
+  #informacoes {
+    margin-top: -20px;
+  }
+
+  .usuario {
+    margin-top: -65px;
+  }
+
   #bv {
     font-size: 1em;
   }
@@ -865,6 +1178,39 @@ hr {
 }
 
 @media (max-width: 350px) {
+  #qtd {
+    margin-left: 45px;
+  }
+
+  .topicos img {
+    height: 20px;
+    width: 20px;
+  }
+
+  #corpo {
+    padding-top: 10px;
+  }
+
+  #categorias {
+    margin: 0;
+    margin-bottom: 25px;
+  }
+
+  #pratos h2,
+  #bebidas h2,
+  #destaques h2 {
+    text-indent: 0;
+    font-size: 1.25em;
+  }
+
+  #informacoes {
+    margin-top: -20px;
+  }
+
+  .usuario {
+    margin-top: -65px;
+  }
+
   #somar,
   #subtrair,
   .remover,

@@ -38,7 +38,7 @@ p {
 
 #topo {
   background-image: linear-gradient(to right, black, #351f1f);
-  box-shadow: 8px 8px 10px rgba(0, 0, 0, 0.26);
+  box-shadow: 8px 8px 10px rgba(0, 0, 0, 0.16);
   display: flex;
   align-items: center;
   justify-content: center;

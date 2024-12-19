@@ -107,22 +107,56 @@ td {
   visibility: visible;
 }
 
-#fundo_pedidos,
 #fundo_produtos,
 #fundo_historico,
 #fundo_financas,
 #fundo_atividades,
 #fundo_funcionarios,
 #fundo_usuarios,
-#fundo_der {
+#fundo_pedidos {
   background-color: rgba(0, 0, 0, 0.377);
   height: 100vh;
   width: 100%;
-  z-index: 9992;
+  z-index: 9998;
   display: none;
   justify-content: center;
   align-items: center;
   position: fixed;
+}
+
+#conteudo_pedido,
+#conteudo_produtos,
+#conteudo_historico {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 25px;
+  padding: 10px;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.164);
+}
+
+.pedidos,
+#tabela_produtos,
+#tabela_historico {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto auto;
+  margin-top: 15px;
+  gap: 10px;
+}
+
+#id_hora {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#situacao_pedido {
+  text-align: center;
+  background-color: yellow;
+  padding: 10px;
 }
 
 #fundo_adicionar_produtos,
@@ -151,16 +185,6 @@ td {
   max-height: 80%;
   overflow-x: auto;
   padding: 15px;
-}
-
-#fundo_der_img {
-  position: relative;
-  border-radius: 5px;
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.301);
-  max-width: 95%;
-  z-index: 9993;
-  max-height: 80vh;
-  overflow-y: auto;
 }
 
 #closeDiagrama {
@@ -262,9 +286,18 @@ td {
   width: 25px;
 }
 
-td button {
-  height: 35px;
-  width: 90px;
+#botoes_pedido,
+#botoes_produtos {
+  margin-top: 5px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.pedidos button,
+#tabela_produtos button {
+  padding: 10px 5px;
+  width: 24%;
   color: white;
   border-radius: 5px;
   cursor: pointer;
@@ -272,18 +305,36 @@ td button {
   transition: 0.3s;
 }
 
-td button:hover {
+.pedidos button:hover,
+#tabela_produtos button:hover {
+  filter: brightness(80%);
+}
+
+.verde:hover,
+.vermelho:hover {
   filter: brightness(80%);
 }
 
 .verde {
   color: white;
   background-color: rgb(19, 99, 19);
+  padding: 10px;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+  transition: 0.3s;
 }
 
 .vermelho {
   color: white;
   background-color: rgb(185, 0, 0);
+  padding: 10px;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+  transition: 0.3s;
 }
 
 #adicionar {
@@ -501,7 +552,9 @@ input[type="number"]::-webkit-inner-spin-button {
   height: 100px;
   width: 100px;
   border-top: 3px solid white;
-  border-left: 3px solid white;
+  border-bottom: 3px solid white;
+  border-left: 3px solid transparent;
+  border-right: 3px solid transparent;
   border-radius: 50%;
 
   animation: load infinite linear 1s;
@@ -517,6 +570,43 @@ input[type="number"]::-webkit-inner-spin-button {
   }
 }
 
+.pag {
+  background: transparent;
+  border: none;
+  text-align: center;
+  outline: none;
+  cursor: default;
+}
+
+.paginacao {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.paginacao button {
+  padding: 10px 20px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  background-color: rgb(35, 35, 255);
+  transition: 0.3s;
+}
+
+.paginacao button:hover {
+  background-color: rgb(76, 76, 255);
+}
+
+.pag {
+  font-size: 1.5em;
+}
+
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
 @media (max-width: 1115px) {
   #corpo {
     padding-top: 90px;
@@ -530,6 +620,14 @@ input[type="number"]::-webkit-inner-spin-button {
   .fundo_opcao {
     height: 150px;
     width: 250px;
+  }
+}
+
+@media (max-width: 930px) {
+  .pedidos,
+  #tabela_produtos,
+  #tabela_historico {
+    grid-template-columns: 1fr 1fr;
   }
 }
 
@@ -582,6 +680,14 @@ input[type="number"]::-webkit-inner-spin-button {
   }
 }
 
+@media (max-width: 633px) {
+  .pedidos,
+  #tabela_produtos,
+  #tabela_historico {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 600px) {
   #abrir_fechar {
     top: 40px;
@@ -613,6 +719,11 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 @media (max-width: 550px) {
+  .fundo_pedidos h1 {
+    font-size: 1.8em;
+    margin-bottom: 15px;
+  }
+
   #opcoes {
     grid-template-columns: 1fr;
   }

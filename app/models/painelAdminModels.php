@@ -86,7 +86,7 @@ class painelAdminModels
             WHERE pedidos.ativo = 'sim'
             GROUP BY 
                 pedidos.id_pedido
-            ORDER BY pedidos.id_pedido DESC
+            ORDER BY pedidos.id_pedido ASC
         ");
         $cmd_pedidos->execute();
         $dados = $cmd_pedidos->fetchall(PDO::FETCH_ASSOC);
@@ -463,8 +463,14 @@ class painelAdminModels
         }
     }
 
-    public function getHistorico()
+    public function getHistorico($pag)
     {
+        $pagina = $pag;
+
+        $limite = 9;
+
+        $inicio = ($pagina * $limite) - $limite;
+
         $dados = array();
         $cmd_historico = $this->con->prepare("
             SELECT
@@ -477,6 +483,7 @@ class painelAdminModels
             WHERE historico.ativo = 'sim'
             GROUP BY historico.id_pedido, historico.data, usuarios.pnome, historico.pagamento, historico.valor
             ORDER BY historico.id_pedido DESC
+            LIMIT $inicio, $limite
         ");
         $cmd_historico->execute();
         $dados = $cmd_historico->fetchAll(PDO::FETCH_ASSOC);
@@ -608,13 +615,20 @@ class painelAdminModels
         return $dados;
     }
 
-    public function getAtividades()
+    public function getAtividades($pag)
     {
+        $pagina = $pag;
+
+        $limite = 9;
+
+        $inicio = ($pagina * $limite) - $limite;
+
         $dados = array();
         $cmd_vendas = $this->con->prepare("
             SELECT logs.*, usuarios.pnome FROM logs
             JOIN usuarios ON logs.id_usuario = usuarios.idUsuarios
             ORDER BY logs.id_logs DESC
+            LIMIT $inicio, $limite
         ");
         $cmd_vendas->execute();
         $dados = $cmd_vendas->fetchAll(PDO::FETCH_ASSOC);

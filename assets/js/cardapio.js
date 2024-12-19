@@ -615,7 +615,7 @@ function atualizarValorTotal() {
     success: function (valor) {
       // Verifica se a forma de entrega é "entrega" e soma a taxa
       let novo_valor =
-        parseFloat(valor) + ($("#forma_entrega").val() == "entrega" ? taxa : 0);
+        parseFloat(valor) + ($("#forma_entrega").val() == "Entrega" ? taxa : 0);
       localStorage.setItem("valor", novo_valor);
 
       // Formata o valor final como moeda brasileira e exibe
@@ -750,9 +750,11 @@ function subtrair(button) {
 }
 
 $("#forma_pagamento").change(function () {
-  if ($("#forma_pagamento").val() == "dinheiro") {
+  if ($("#forma_pagamento").val() == "Dinheiro") {
     $("#fundo_troco").css("display", "flex");
     $("#fundo_troco").css("z-index", "9997");
+  } else {
+    localStorage.removeItem("troco");
   }
 });
 
@@ -761,7 +763,7 @@ var rua = $("#rua_num p ").text();
 var bairro = $("#bairro_cidade_estado p").text();
 
 $("#forma_entrega").change(function () {
-  if ($("#forma_entrega").val() == "entrega") {
+  if ($("#forma_entrega").val() == "Entrega") {
     $("#rua_num p").text(rua);
     $("#rua_num p").css("font-weight", "bold");
     $("#bairro_cidade_estado p").text(bairro);
@@ -789,6 +791,7 @@ $("#enviarTroco").on("click", function () {
 });
 
 $("#naoTroco").on("click", function () {
+  localStorage.removeItem("troco");
   fecharTroco();
 });
 
@@ -841,6 +844,7 @@ function finalizar() {
       if (response.status === "success") {
         fecharPagamento();
         getSituacao();
+        localStorage.removeItem("troco");
       } else {
         alert("deu pau");
       }
@@ -909,6 +913,7 @@ function recusadoFinalizado() {
 function exibirSituacao(dado) {
   $("#situacao").empty();
   $("#situacao").text(dado.situacao);
+  $("#numero_pedido").text("Número do pedido: " + dado.id_pedido);
   $("#fundo_situacao").css("display", "flex");
   $("body").css("overflow", "hidden");
 }

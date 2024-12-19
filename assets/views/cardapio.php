@@ -104,21 +104,21 @@
                 <label for="forma_entrega">Forma de entrega</label><br>
                 <select name="forma_entrega" id="forma_entrega">
                     <option value="#" style="text-align: center;">-----Selecione-----</option>
-                    <option value="entrega">Entrega</option>
-                    <option value="retirada">Retirada</option>
+                    <option value="Entrega">Entrega</option>
+                    <option value="Retirada">Retirada</option>
                 </select>
                 <p id="res_entrega" style="text-align: center; font-size: .9em; color: red;"></p><br>
                 <label for="forma_pagamento">Forma de Pagamento</label><br>
                 <select name="forma_pagamento" id="forma_pagamento">
                     <option value="#" style="text-align: center;">-----Selecione-----</option>
-                    <option value="dinheiro">Dinheiro</option>
-                    <option value="pix">Pix</option>
-                    <option value="c_visa">Crédito - Visa</option>
-                    <option value="c_master">Crédito - MasterCard</option>
-                    <option value="c_elo">Crédito - Elo</option>
-                    <option value="d_visa">Débito - Visa</option>
-                    <option value="d_master">Débito - MasterCard</option>
-                    <option value="d_elo">Débito - Elo</option>
+                    <option value="Dinheiro">Dinheiro</option>
+                    <option value="Pix">Pix</option>
+                    <option value="Crédito visa">Crédito - Visa</option>
+                    <option value="Credito master">Crédito - MasterCard</option>
+                    <option value="Credito elo">Crédito - Elo</option>
+                    <option value="Débito visa">Débito - Visa</option>
+                    <option value="Débito master">Débito - MasterCard</option>
+                    <option value="Débito elo">Débito - Elo</option>
                 </select>
                 <p id="res_pagamento" style="text-align: center; font-size: .9em; color: red;"></p>
                 <div id="endereco" style="margin-top: 10px;">
@@ -161,7 +161,11 @@
     <div id="fundo_situacao">
         <div id="corpo_situacao">
             <h1>Situação do pedido</h1>
-            <p id="situacao" style="margin-bottom: 25px; text-align: center;"></p>
+            <p id="numero_pedido" style="text-align: center; margin: 0px 25px;"></p>
+            <p id="situacao" style="text-align: center;"></p>
+            <a href="https://wa.me/5521990420932?text=Olá! Eu gostaria de tirar uma dúvida!" target="_blank"
+                style="margin: 25px; text-align: center; display: block;">Precisa de
+                ajuda?</a>
             <div id="tres_pontos">
                 <div id="ponto_1" class="pontos"></div>
                 <div id="ponto_2" class="pontos"></div>

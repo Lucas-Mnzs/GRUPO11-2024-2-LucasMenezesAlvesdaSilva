@@ -281,7 +281,7 @@ class cardapioModels
     {
         $id_usuario = $_SESSION['id_usuario'];
         $cmd_situacao = $this->con->prepare("
-            SELECT situacao
+            SELECT situacao, id_pedido
             FROM pedidos
             JOIN carrinho ON pedidos.id_carrinho = carrinho.id_carrinho
             WHERE carrinho.id_usuario = ? AND pedidos.ativo = 'sim'

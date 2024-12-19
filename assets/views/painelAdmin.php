@@ -90,29 +90,7 @@
                     placeholder="Buscar um pedido">
             </div>
             <div id="pedidos_corpo">
-                <table>
-                    <thead>
-                        <th>Situacao</th>
-                        <th>Nº Pedido</th>
-                        <th>Data/Hora</th>
-                        <th>Pedido</th>
-                        <th>Entrega</th>
-                        <th>Pagamento</th>
-                        <th>Total</th>
-                        <th>Cliente</th>
-                        <th>Contato</th>
-                        <th>Endereço</th>
-                        <th>Referência</th>
-                        <th>Aceitar</th>
-                        <th>Rota</th>
-                        <th>Recusar</th>
-                        <th>Finalizar</th>
-                    </thead>
-                    <tbody id="tabela_pedidos">
-
-
-                    </tbody>
-                </table>
+                <div class="pedidos"></div>
             </div>
         </div>
     </div>
@@ -134,23 +112,9 @@
                     placeholder="Buscar um produto">
             </div>
             <div id="produtos_corpo">
-                <table>
-                    <thead>
-                        <th>Disponibilidade</th>
-                        <th>id</th>
-                        <th>Nome</th>
-                        <th>Descrição</th>
-                        <th>Preço</th>
-                        <th>Imagem</th>
-                        <th>Editar</th>
-                        <th>Deletar</th>
-                        <th>Mostrar</th>
-                        <th>Esconder</th>
-                    </thead>
-                    <tbody id="tabela_produtos">
+                <div id="tabela_produtos">
 
-                    </tbody>
-                </table>
+                </div>
             </div>
         </div>
     </div>
@@ -169,20 +133,14 @@
                     placeholder="Buscar registro">
             </div>
             <div id="corpo_historico">
-                <table>
-                    <thead>
-                        <th>ID do Pedido</th>
-                        <th>Cliente</th>
-                        <th>Data/Hora</th>
-                        <th>Pedido</th>
-                        <th>Pagamento</th>
-                        <th>Total</th>
-                        <th>Excluir</th>
-                    </thead>
-                    <tbody id="tabela_historico">
+                <div id="tabela_historico">
 
-                    </tbody>
-                </table>
+                </div>
+                <div class="paginacao">
+                    <button type="button" onclick="diminuirPagHistorico()">Anterior</button>
+                    <input type="number" name="pag" class="pag" readonly value="1">
+                    <button type="button" onclick="aumentarPagHistorico()">Próximo</button>
+                </div>
             </div>
         </div>
     </div>
@@ -249,12 +207,6 @@
             </div>
         </div>
     </div>
-    <div id="fundo_der">
-        <div id="fundo_der_img">
-            <img src="assets/image/diagrama.png" alt="Diagrama">
-            <img src="assets/image/close.png" alt="Fechar diagrama" id="closeDiagrama" onclick="esconderDer()">
-        </div>
-    </div>
     <div id="fundo_atividades">
         <div class="fundo_atividades">
             <div class="back" onclick="esconderAtividades()">
@@ -279,6 +231,11 @@
 
                     </tbody>
                 </table>
+                <div class="paginacao">
+                    <button type="button" onclick="diminuirPagAtividades()">Anterior</button>
+                    <input type="number" name="pag" class="pag" readonly value="1">
+                    <button type="button" onclick="aumentarPagAtividades()">Próximo</button>
+                </div>
             </div>
         </div>
     </div>
@@ -428,42 +385,36 @@
                     <img src="assets/image/produtos.jpg" alt="Produtos" id="produtos">
                 </div>
                 <div id="historico">
-                    <div id="mostrar_historico" class="fundo_opcao" onclick="mostrarHistorico()">
+                    <div id="mostrar_historico" class="fundo_opcao" onclick="mostrarHistorico(1)">
                         <h1 class="opcao">Histórico</h1>
                     </div>
                     <img src="assets/image/historico.png" alt="Historico" id="historico">
                 </div>
-                <div id="der">
-                    <div id="mostrar_der" class="fundo_opcao" onclick="mostrarDer()">
-                        <h1 class="opcao">DER</h1>
-                    </div>
-                    <img src="assets/image/der.png" alt="Diagrama" id="der_img">
-                </div>
                 <?php if ($_SESSION['tipo_usuario'] === "master") : ?>
-                    <div id="financas">
-                        <div id="mostrar_financas" class="fundo_opcao" onclick="mostrarFinancas()">
-                            <h1 class="opcao">Finanças</h1>
-                        </div>
-                        <img src="assets/image/financas.webp" alt="Finanças" id="financas">
+                <div id="financas">
+                    <div id="mostrar_financas" class="fundo_opcao" onclick="mostrarFinancas()">
+                        <h1 class="opcao">Finanças</h1>
                     </div>
-                    <div id="atividades">
-                        <div id="mostrar_atividades" class="fundo_opcao" onclick="mostrarAtividades()">
-                            <h1 class="opcao">Atividades</h1>
-                        </div>
-                        <img src="assets/image/atividades.png" alt="Atividades" id="atividades">
+                    <img src="assets/image/financas.webp" alt="Finanças" id="financas">
+                </div>
+                <div id="atividades">
+                    <div id="mostrar_atividades" class="fundo_opcao" onclick="mostrarAtividades(1)">
+                        <h1 class="opcao">Atividades</h1>
                     </div>
-                    <div id="adicionar_user">
-                        <div id="mostrar_adicionar_user" class="fundo_opcao" onclick="getFuncionarios()">
-                            <h1 class="opcao">Adicionar Funcionário</h1>
-                        </div>
-                        <img src="assets/image/adicionar.png" alt="Adicionar Funcionário" id="adicionar_user">
+                    <img src="assets/image/atividades.png" alt="Atividades" id="atividades">
+                </div>
+                <div id="adicionar_user">
+                    <div id="mostrar_adicionar_user" class="fundo_opcao" onclick="getFuncionarios()">
+                        <h1 class="opcao">Adicionar Funcionário</h1>
                     </div>
-                    <div id="ver_usuarios">
-                        <div id="mostrar_usuarios" class="fundo_opcao" onclick="getUsuarios()">
-                            <h1 class="opcao">Usuários</h1>
-                        </div>
-                        <img src="assets/image/user.png" alt="Consultar Usuários" id="consultar_usuarios">
+                    <img src="assets/image/adicionar.png" alt="Adicionar Funcionário" id="adicionar_user">
+                </div>
+                <div id="ver_usuarios">
+                    <div id="mostrar_usuarios" class="fundo_opcao" onclick="getUsuarios()">
+                        <h1 class="opcao">Usuários</h1>
                     </div>
+                    <img src="assets/image/user.png" alt="Consultar Usuários" id="consultar_usuarios">
+                </div>
                 <?php else: ?>
                 <?php endif; ?>
             </div>

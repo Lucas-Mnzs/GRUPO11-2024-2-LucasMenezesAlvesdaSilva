@@ -196,10 +196,10 @@ class painelAdminController extends Controller
         echo $dados;
     }
 
-    public function getHistorico()
+    public function getHistorico($pag)
     {
         $painelModels = new painelAdminModels();
-        $dados = $painelModels->getHistorico();
+        $dados = $painelModels->getHistorico($pag);
 
         echo json_encode($dados);
     }
@@ -260,10 +260,10 @@ class painelAdminController extends Controller
         echo json_encode($dados);
     }
 
-    public function getAtividades()
+    public function getAtividades($pag)
     {
         $painelModels = new painelAdminModels();
-        $dados = $painelModels->getAtividades();
+        $dados = $painelModels->getAtividades($pag);
 
         echo json_encode($dados);
     }

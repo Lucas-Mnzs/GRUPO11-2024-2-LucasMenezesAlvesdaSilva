@@ -74,7 +74,7 @@ $("#logout").on("click", function () {
 });
 
 function mostrarPedidos() {
-  $("#tabela_pedidos").empty();
+  $(".pedidos").empty();
   $.ajax({
     url: "painelAdmin/getPedidos",
     type: "GET",
@@ -82,53 +82,94 @@ function mostrarPedidos() {
     success: function (dados) {
       $("#fundo_pedidos").css("display", "flex");
       dados.forEach((dado) => {
-        const dataHora = new Date(dado.data_hora); // Converte a string para um objeto Date
+        const dataHora = new Date(dado.data_hora.replace(" ", "T")); // Ajusta o formato para ISO 8601
+        // Converte a string para um objeto Date
         const dataFormatada = dataHora.toLocaleDateString("pt-BR"); // Formata a data para o formato DD/MM/AAAA
         const horaFormatada = dataHora.toLocaleTimeString("pt-BR", {
           hour: "2-digit",
           minute: "2-digit",
         }); // Formata a hora para HH:MM
-        $("#tabela_pedidos").append(`
-          <tr>
-              <td>${dado.situacao}</td>
-              <td>${dado.id_pedido}</td>
-              <td>${dataFormatada} ${horaFormatada}</td>
-              <td>${dado.produtos}</td>
-              <td>${dado.tipo_entrega}</td>
-              <td>${dado.forma_pagamento}</td>
-              <td>${parseFloat(dado.valor_total).toLocaleString("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              })} <br> Troco: ${parseFloat(dado.troco).toLocaleString("pt-BR", {
+
+        let situacaoTexto = "";
+        let situacaoCorFundo = "yellow"; // Cor padrão
+        let situacaoCorTexto = "black"; // Cor padrão
+
+        if (dado.situacao == "O pedido está em preparação!") {
+          situacaoTexto = "Pedido aceito!";
+          situacaoCorFundo = "lightgreen";
+          situacaoCorTexto = "darkgreen";
+        } else if (dado.situacao == "O pedido saiu para entrega!") {
+          situacaoTexto = "Pedido em rota!";
+          situacaoCorFundo = "lightgreen";
+          situacaoCorTexto = "darkgreen";
+        } else {
+          situacaoTexto = "Aguardando aceitação!";
+        }
+
+        $(".pedidos").append(`
+          <div id="conteudo_pedido">
+            <div id="id_hora">
+              <p><b>Nº · ${dado.id_pedido}</b></p>
+              <p><b>${dataFormatada} ${horaFormatada}</b></p>
+            </div>
+            <hr>
+            <div id="situacao_pedido" style="background-color: ${situacaoCorFundo}; color: ${situacaoCorTexto};">
+              <p>${situacaoTexto}</p>
+            </div>
+            <hr>
+            <div id="dados_produtos">
+              <h2 style="text-align:center;">Pedido</h2>
+              <p>${dado.produtos}</p>
+            </div>
+            <hr>
+            <div id="entrega_pagamento">
+              <h2 style="text-align:center;">${dado.tipo_entrega}</h2>
+                <div id="forma_total_troco">
+                    <p><b>${dado.forma_pagamento}: </b> ${parseFloat(
+          dado.valor_total
+        ).toLocaleString("pt-BR", {
           style: "currency",
           currency: "BRL",
-        })}</td>
-              <td>${dado.pnome}</td>
-              <td>${dado.cell}</td>
-              <td>${dado.rua}, ${dado.numero} - ${dado.complemento}</td>
-              <td>${dado.referencia}</td>
-              <td>
-                  <button type="button" id="aceitar" class="verde" onclick="aceitar(${
-                    dado.id_usuario
-                  })">Aceitar</button>
-              </td>
-              <td>
-                  <button type="button" id="rota" class="verde" onclick="rota(${
-                    dado.id_usuario
-                  })">Em Rota</button>
-              </td>
-              <td>
-                  <button type="button" id="recusar" class="vermelho" onclick="recusar(${
-                    dado.id_usuario
-                  })">Recusar</button>
-              </td>
-              <td>
-                  <button type="button" id="finalizar" class="vermelho" onclick="finalizar(${
-                    dado.id_usuario
-                  })">Finalizar</button>
-              </td>
-          </tr>
-          `);
+        })}
+                    </p>
+                  <p>
+                  <b>Troco: </b> ${parseFloat(dado.troco).toLocaleString(
+                    "pt-BR",
+                    {
+                      style: "currency",
+                      currency: "BRL",
+                    }
+                  )}
+                  </p>
+                </div>
+            </div>
+            <hr>
+            <div id="endereco_cliente">
+              <h2 style="text-align:center;">Cliente</h2>
+              <p><b>Nome:</b> ${dado.pnome}</p>
+              <p><b>Contato:</b> ${dado.cell}</p>
+              <p><b>Endereço:</b> ${dado.rua}, ${dado.numero} - ${
+          dado.complemento
+        }</p>
+              <p><b>Referência:</b> ${dado.referencia}</p>
+            </div>
+            <hr>
+            <div id="botoes_pedido">
+              <button type="button" id="aceitar" class="verde" onclick="aceitar(${
+                dado.id_usuario
+              })">Aceitar</button>
+              <button type="button" id="rota" class="verde" onclick="rota(${
+                dado.id_usuario
+              })">Em Rota</button>
+              <button type="button" id="recusar" class="vermelho" onclick="recusar(${
+                dado.id_usuario
+              })">Recusar</button>
+              <button type="button" id="finalizar" class="vermelho" onclick="finalizar(${
+                dado.id_usuario
+              })">Finalizar</button>
+            </div>
+          </div>
+        `);
       });
     },
     error: function (xhr, status, error) {
@@ -221,6 +262,7 @@ function finalizar(id_usuario) {
 
 function fecharPedidos() {
   $("#fundo_pedidos").css("display", "none");
+  $(".pedidos").empty();
 }
 
 $("#pedidos").on("mouseenter", function () {
@@ -287,10 +329,10 @@ $("#financas").on("mouseleave", function () {
   $("#mostrar_financas").removeClass("visible");
 });
 
-function mostrarAtividades() {
+function mostrarAtividades(pag) {
   $("#tabela_atividades").empty();
   $.ajax({
-    url: "painelAdmin/getAtividades",
+    url: "painelAdmin/getAtividades/" + pag,
     type: "GET",
     dataType: "json",
     success: function (dados) {
@@ -306,6 +348,8 @@ function mostrarAtividades() {
           </tr>
           `);
       });
+      $("#pag").val(pag);
+      let pag = dados.pagina;
     },
     error: function (xhr, status, error) {
       console.log("Status: " + status); // Mostra o status do erro
@@ -313,6 +357,44 @@ function mostrarAtividades() {
       console.log("Resposta do servidor: " + xhr.responseText); // Exibe a resposta completa
     },
   });
+}
+
+function aumentarPagAtividades() {
+  let pag = $(".pag").val();
+  pag++;
+  $(".pag").val(pag);
+  mostrarAtividades(pag);
+}
+
+function diminuirPagAtividades() {
+  let pag = $(".pag").val();
+  if (pag > 1) {
+    pag--;
+    mostrarAtividades(pag);
+  } else {
+    pag;
+    mostrarAtividades(pag);
+  }
+  $(".pag").val(pag);
+}
+
+function aumentarPagHistorico() {
+  let pag = $(".pag").val();
+  pag++;
+  $(".pag").val(pag);
+  mostrarHistorico(pag);
+}
+
+function diminuirPagHistorico() {
+  let pag = $(".pag").val();
+  if (pag > 1) {
+    pag--;
+    mostrarHistorico(pag);
+  } else {
+    pag;
+    mostrarHistorico(pag);
+  }
+  $(".pag").val(pag);
 }
 
 function mostrarProdutos() {
@@ -324,40 +406,60 @@ function mostrarProdutos() {
     success: function (dados) {
       $("#fundo_produtos").css("display", "flex");
       dados.forEach((dado) => {
+        let texto = "";
+        let corFundo = "yellow"; // Cor padrão
+        let corTexto = "black"; // Cor padrão
+
+        if (dado.disponibilidade == "disponível") {
+          texto = "Disponível";
+          corFundo = "lightgreen";
+          corTexto = "darkgreen";
+        } else if (dado.disponibilidade == "indisponível") {
+          texto = "Indisponível";
+          corFundo = "rgb(255, 152, 152)";
+          corTexto = "darkred";
+        }
         $("#tabela_produtos").append(`
-          <tr>
-              <td>${dado.disponibilidade}</td>
-              <td>${dado.idProdutos}</td>
-              <td>${dado.nome}</td>
-              <td>${dado.descricao}</td>
-              <td>${parseFloat(dado.preco).toLocaleString("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              })}</td>
-              <td><img src="${
-                dado.imagem
-              }" heigth="70px" width="70px" alt="imagem do produto"></td>
-              <td>
-                  <button type="button" id="editar" class="verde" onclick="editar(${
-                    dado.idProdutos
-                  })">Editar</button>
-              </td>
-              <td>
-                  <button type="button" id="deletar" class="vermelho" onclick="deletar(${
-                    dado.idProdutos
-                  })">Deletar</button>
-              </td>
-              <td>
-                  <button type="button" id="disponivel" class="verde" onclick="disponivel(${
-                    dado.idProdutos
-                  })">Mostrar</button>
-              </td>
-              <td>
-                  <button type="button" id="indisponivel" class="vermelho" onclick="indisponivel(${
-                    dado.idProdutos
-                  })">Esconder</button>
-              </td>
-          </tr>
+          <div id="conteudo_produtos">
+              <div style="height: 200px">
+                <img src="${
+                  dado.imagem
+                }" style="height: 100%; width: 100%;" alt="imagem do produto">
+              </div>
+              <div>
+              <hr>
+              <p style="text-align: center; padding: 10px; background-color: ${corFundo}; color: ${corTexto};" id="disponibilidade">${texto}</p>
+              <hr>
+              <div id="informacoes_produto">
+                <p><b>ID:</b> ${dado.idProdutos}</p>
+                <p><b>Nome:</b> ${dado.nome}</p>
+                <p><b>Descrição:</b> ${dado.descricao}</p>
+                <p><b>Valor:</b> ${parseFloat(dado.preco).toLocaleString(
+                  "pt-BR",
+                  {
+                    style: "currency",
+                    currency: "BRL",
+                  }
+                )}</p>
+              </div>
+              <hr>
+              
+              <div id="botoes_produtos">
+                <button type="button" id="editar" class="verde" onclick="editar(${
+                  dado.idProdutos
+                })">Editar</button>
+                <button type="button" id="deletar" class="vermelho" onclick="deletar(${
+                  dado.idProdutos
+                })">Deletar</button>
+                <button type="button" id="disponivel" class="verde" onclick="disponivel(${
+                  dado.idProdutos
+                })">Mostrar</button>
+                <button type="button" id="indisponivel" class="vermelho" onclick="indisponivel(${
+                  dado.idProdutos
+                })">Esconder</button>
+              </div>
+              
+          </div>
           `);
       });
     },
@@ -371,16 +473,17 @@ function mostrarProdutos() {
 
 function fecharProdutos() {
   $("#fundo_produtos").css("display", "none");
+  $("#tabela_produtos").empty();
 }
 
 document
   .getElementById("pesquisar_pedido")
   .addEventListener("keyup", function () {
     const query = this.value.toLowerCase();
-    const rows = document.querySelectorAll("#tabela_pedidos tr");
+    const rows = document.querySelectorAll("#conteudo_pedido");
 
     rows.forEach((row) => {
-      const cells = row.getElementsByTagName("td");
+      const cells = row.getElementsByTagName("div");
       const match = Array.from(cells).some((cell) =>
         cell.textContent.toLowerCase().includes(query)
       );
@@ -393,10 +496,10 @@ document
   .getElementById("pesquisar_produto")
   .addEventListener("keyup", function () {
     const query = this.value.toLowerCase();
-    const rows = document.querySelectorAll("#tabela_produtos tr");
+    const rows = document.querySelectorAll("#conteudo_produtos");
 
     rows.forEach((row) => {
-      const cells = row.getElementsByTagName("td");
+      const cells = row.getElementsByTagName("div");
       const match = Array.from(cells).some((cell) =>
         cell.textContent.toLowerCase().includes(query)
       );
@@ -409,10 +512,10 @@ document
   .getElementById("pesquisar_registro")
   .addEventListener("keyup", function () {
     const query = this.value.toLowerCase();
-    const rows = document.querySelectorAll("#tabela_historico tr");
+    const rows = document.querySelectorAll("#conteudo_historico");
 
     rows.forEach((row) => {
-      const cells = row.getElementsByTagName("td");
+      const cells = row.getElementsByTagName("div");
       const match = Array.from(cells).some((cell) =>
         cell.textContent.toLowerCase().includes(query)
       );
@@ -573,7 +676,6 @@ function disponivel(id) {
     success: function (response) {
       if (response.status === "success") {
         mostrarProdutos();
-        alert("disponível");
       } else {
         alert("deu pau");
       }
@@ -594,7 +696,6 @@ function indisponivel(id) {
     success: function (response) {
       if (response.status === "success") {
         mostrarProdutos();
-        alert("indisponível");
       } else {
         alert("deu pau");
       }
@@ -671,10 +772,12 @@ function esconderAdc() {
 
 function esconderFuncionarios() {
   $("#fundo_funcionarios").css("display", "none");
+  $("#tabela_funcionarios").empty();
 }
 
 function esconderUsuarios() {
   $("#fundo_usuarios").css("display", "none");
+  $("#tabela_usuarios").empty();
 }
 
 function esconderEdit() {
@@ -704,6 +807,7 @@ function esconderAdicionar() {
 
 function esconderHistorico() {
   $("#fundo_historico").css("display", "none");
+  $("#tabela_historico").empty();
 }
 
 function esconderFinancas() {
@@ -712,6 +816,7 @@ function esconderFinancas() {
 
 function esconderAtividades() {
   $("#fundo_atividades").css("display", "none");
+  $("#tabela_atividades").empty();
 }
 
 document
@@ -726,38 +831,51 @@ document
     document.querySelector(".span1_edit").textContent = this.files[0].name;
   });
 
-function mostrarHistorico() {
+function mostrarHistorico(pag) {
   $("#tabela_historico").empty();
   $.ajax({
-    url: "painelAdmin/getHistorico",
+    url: "painelAdmin/getHistorico/" + pag,
     type: "GET",
     dataType: "json",
     success: function (dados) {
       $("#fundo_historico").css("display", "flex");
       dados.forEach((dado) => {
-        const dataHora = new Date(dado.data); // Converte a string para um objeto Date
-        const dataFormatada = dataHora.toLocaleDateString("pt-BR"); // Formata a data para o formato DD/MM/AAAA
-        const horaFormatada = dataHora.toLocaleTimeString("pt-BR", {
-          hour: "2-digit",
-          minute: "2-digit",
-        }); // Formata a hora para HH:MM
+        const dataBruta = dado.data; // Exemplo: "2024-12-11"
+        const [ano, mes, dia] = dataBruta.split("-"); // Divide a data no formato YYYY-MM-DD
+        const dataFormatada = `${dia}/${mes}/${ano}`; // Reorganiza para DD/MM/AAAA
         $("#tabela_historico").append(`
-          <tr>
-              <td>${dado.id_pedido}</td>
-              <td>${dado.pnome}</td>
-              <td>${dataFormatada} ${horaFormatada}</td>
-              <td>${dado.produtos}</td>
-              <td>${dado.pagamento}</td>
-              <td>${parseFloat(dado.valor).toLocaleString("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              })}</td>
-              <td>
-                <button type="button" id="excluir" class="vermelho" onclick="excluirRegistro(${
+          <div id="conteudo_historico">
+              <div id="numero_data" style="display: flex; justify-content: space-between; align-items: center;">
+                <p>Nº · ${dado.id_pedido}</p>
+                <p>${dataFormatada}</p>
+              </div>
+              <hr>
+              <div>
+                <h2 style="text-align: center">Cliente</h2>
+                <p><b>Nome: </b>${dado.pnome}</p>
+                <hr>
+              </div>
+              <div>
+                <h2 style="text-align: center">Pedido</h2>
+                <p>${dado.produtos}</p>
+              </div>
+              <hr>
+              <div>
+                <h2 style="text-align: center">Pagamento</h2>
+                <p><b>Pagamento: </b>${dado.pagamento}</p>
+                <p><b>Valor: </b>${parseFloat(dado.valor).toLocaleString(
+                  "pt-BR",
+                  {
+                    style: "currency",
+                    currency: "BRL",
+                  }
+                )}</p>
+              </div>
+              <hr>
+                <button style="width: 100%" type="button" id="excluir" class="vermelho" onclick="excluirRegistro(${
                   dado.id_pedido
                 })">Excluir</button>
-              </td>
-          </tr>
+          </div>
           `);
       });
     },
@@ -1614,14 +1732,4 @@ function excluirUser(id) {
       console.log("Resposta do servidor: " + xhr.responseText); // Exibe a resposta completa
     },
   });
-}
-
-function mostrarDer() {
-  $("#fundo_der").css("display", "flex");
-  $("body").css("overflow", "hidden");
-}
-
-function esconderDer() {
-  $("#fundo_der").css("display", "none");
-  $("body").css("overflow", "auto");
 }

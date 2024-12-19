@@ -338,14 +338,29 @@ function mostrarAtividades(pag) {
     success: function (dados) {
       $("#fundo_atividades").css("display", "flex");
       dados.forEach((dado) => {
+        const dataHora = new Date(dado.data.replace(" ", "T")); // Ajusta o formato para ISO 8601
+        // Converte a string para um objeto Date
+        const dataFormatada = dataHora.toLocaleDateString("pt-BR"); // Formata a data para o formato DD/MM/AAAA
+        const horaFormatada = dataHora.toLocaleTimeString("pt-BR", {
+          hour: "2-digit",
+          minute: "2-digit",
+        }); // Formata a hora para HH:MM
         $("#tabela_atividades").append(`
-          <tr>
-              <td>${dado.id_logs}</td>
-              <td>${dado.id_usuario}</td>
-              <td>${dado.pnome}</td>
-              <td>${dado.acao}</td>
-              <td>${dado.data}</td>
-          </tr>
+          <div id="conteudo_atividades">
+              <div style="display: flex; align-items: center; justify-content: space-between;">
+                <p><b>Nº · ${dado.id_logs}</b></p>
+                <p><b>${dataFormatada} ${horaFormatada}</b></p>
+              </div>
+              <hr>
+              <div id="usuario_log">
+                <p><b>ID: </b>${dado.id_usuario}</p>
+                <p><b>Nome: </b>${dado.pnome}</p>
+              </div>
+              <hr>
+              <div>
+                <p style="text-align: center; padding: 10px"><b>${dado.acao}</b></p>
+              </div>
+          </div>
           `);
       });
       $("#pag").val(pag);
@@ -528,10 +543,10 @@ document
   .getElementById("pesquisar_atividade")
   .addEventListener("keyup", function () {
     const query = this.value.toLowerCase();
-    const rows = document.querySelectorAll("#tabela_atividades tr");
+    const rows = document.querySelectorAll("#conteudo_atividades");
 
     rows.forEach((row) => {
-      const cells = row.getElementsByTagName("td");
+      const cells = row.getElementsByTagName("div");
       const match = Array.from(cells).some((cell) =>
         cell.textContent.toLowerCase().includes(query)
       );
@@ -544,10 +559,10 @@ document
   .getElementById("pesquisar_funcionario")
   .addEventListener("keyup", function () {
     const query = this.value.toLowerCase();
-    const rows = document.querySelectorAll("#tabela_funcionarios tr");
+    const rows = document.querySelectorAll("#conteudo_funcionarios");
 
     rows.forEach((row) => {
-      const cells = row.getElementsByTagName("td");
+      const cells = row.getElementsByTagName("div");
       const match = Array.from(cells).some((cell) =>
         cell.textContent.toLowerCase().includes(query)
       );
@@ -560,10 +575,10 @@ document
   .getElementById("pesquisar_usuario")
   .addEventListener("keyup", function () {
     const query = this.value.toLowerCase();
-    const rows = document.querySelectorAll("#tabela_usuarios tr");
+    const rows = document.querySelectorAll("#conteudo_usuarios");
 
     rows.forEach((row) => {
-      const cells = row.getElementsByTagName("td");
+      const cells = row.getElementsByTagName("div");
       const match = Array.from(cells).some((cell) =>
         cell.textContent.toLowerCase().includes(query)
       );
@@ -1635,17 +1650,26 @@ function getFuncionarios() {
       dados.forEach((dado) => {
         $("#tabela_funcionarios").append(`
           
-          <tr>
-              <td>${dado.idUsuarios}</td>
-              <td>${dado.pnome}</td>
-              <td>${dado.cpf}</td>
-              <td>${dado.cell}</td>
-              <td>${dado.email}</td>
-              <td>${dado.rua}, ${dado.numero} - ${dado.bairro} - ${dado.cidade}/${dado.estado}</td>
-              <td>
-                  <button type="button" onclick="excluirFunc(${dado.idUsuarios})" class="vermelho">Excluir</button>
-              </td>
-          </tr>
+          <div id="conteudo_funcionarios">
+              <div style="text-align: center;">
+                <b>
+                  <h1>${dado.pnome} ${dado.sobrenome}</h1>
+                </b>
+              </div>
+              <hr>
+              <div>
+                <p><b>ID:</b> ${dado.idUsuarios}</p>
+                <p><b>CPF:</b> ${dado.cpf}</p>
+                <p><b>Contato:</b> ${dado.cell}</p>
+                <p><b>Email:</b> ${dado.email}</p>
+                <p><b>Endereço: </b>${dado.rua}, ${dado.numero} - ${dado.bairro} - ${dado.cidade}/${dado.estado}</p>
+                <p><b>CEP: </b>${dado.cep}</p>
+              </div>
+              <hr>
+              <div>
+                  <button style="width: 100%" type="button" onclick="excluirFunc(${dado.idUsuarios})" class="vermelho">Excluir</button>
+              </div>
+          </div>
           
           `);
       });
@@ -1690,17 +1714,27 @@ function getUsuarios() {
       dados.forEach((dado) => {
         $("#tabela_usuarios").append(`
           
-          <tr>
-              <td>${dado.idUsuarios}</td>
-              <td>${dado.pnome}</td>
-              <td>${dado.cpf}</td>
-              <td>${dado.cell}</td>
-              <td>${dado.email}</td>
-              <td>${dado.rua}, ${dado.numero} - ${dado.bairro} - ${dado.cidade}/${dado.estado}</td>
-              <td>
-                  <button type="button" onclick="excluirUser(${dado.idUsuarios})" class="vermelho">Excluir</button>
-              </td>
-          </tr>
+          <div id="conteudo_usuarios">
+              <div style="text-align: center;">
+                <b>
+                  <h1>${dado.pnome} ${dado.sobrenome}</h1>
+                </b>
+              </div>
+              <hr>
+              <div>
+                <p><b>ID:</b> ${dado.idUsuarios}</p>
+                <p><b>CPF:</b> ${dado.cpf}</p>
+                <p><b>Contato:</b> ${dado.cell}</p>
+                <p><b>Email:</b> ${dado.email}</p>
+                <p><b>Endereço: </b>${dado.rua}, ${dado.numero} - ${dado.bairro} - ${dado.cidade}/${dado.estado}</p>
+                <p><b>CEP: </b>${dado.cep}</p>
+                <p><b>Tipo: </b>${dado.tipo_usuario}</p>
+              </div>
+              <hr>
+              <div>
+                  <button type="button" style="width: 100%" onclick="excluirUser(${dado.idUsuarios})" class="vermelho">Excluir</button>
+              </div>
+          </div>
           
           `);
       });

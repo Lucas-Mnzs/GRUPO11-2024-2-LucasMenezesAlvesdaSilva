@@ -1,7 +1,7 @@
 #abrir_fechar {
   position: fixed;
   z-index: 9997;
-  top: 90px;
+  top: 85px;
   left: 10px;
   height: 35px;
   width: 80px;
@@ -42,8 +42,8 @@ td {
   border-radius: 5px;
   padding: 7.5px 20px;
   position: fixed;
-  top: 25px;
-  right: 30px;
+  top: 85px;
+  right: 10px;
   color: white;
   z-index: 9997;
   font-size: 1em;
@@ -126,7 +126,10 @@ td {
 
 #conteudo_pedido,
 #conteudo_produtos,
-#conteudo_historico {
+#conteudo_historico,
+#conteudo_atividades,
+#conteudo_funcionarios,
+#conteudo_usuarios {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -139,7 +142,10 @@ td {
 
 .pedidos,
 #tabela_produtos,
-#tabela_historico {
+#tabela_historico,
+#tabela_atividades,
+#tabela_funcionarios,
+#tabela_usuarios {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: auto auto;
@@ -626,7 +632,10 @@ input[type="number"]::-webkit-inner-spin-button {
 @media (max-width: 930px) {
   .pedidos,
   #tabela_produtos,
-  #tabela_historico {
+  #tabela_historico,
+  #tabela_atividades,
+  #tabela_funcionarios,
+  #tabela_usuarios {
     grid-template-columns: 1fr 1fr;
   }
 }
@@ -653,16 +662,15 @@ input[type="number"]::-webkit-inner-spin-button {
 
 @media (max-width: 700px) {
   #abrir_fechar {
-    top: 50px;
+    top: 55px;
+  }
+
+  #logout {
+    top: 55px;
   }
 
   #corpo {
     padding-top: 70px;
-  }
-
-  #logout {
-    top: 5px;
-    right: 30px;
   }
 
   #opcoes {
@@ -683,24 +691,24 @@ input[type="number"]::-webkit-inner-spin-button {
 @media (max-width: 633px) {
   .pedidos,
   #tabela_produtos,
-  #tabela_historico {
+  #tabela_historico,
+  #tabela_atividades,
+  #tabela_funcionarios,
+  #tabela_usuarios {
     grid-template-columns: 1fr;
   }
 }
 
 @media (max-width: 600px) {
   #abrir_fechar {
-    top: 40px;
-  }
-
-  #corpo {
-    padding-top: 70px;
+    top: 45px;
   }
 
   #logout {
-    padding: 5px 18px;
-    top: 5px;
-    right: 30px;
+    top: 45px;
+  }
+  #corpo {
+    padding-top: 70px;
   }
 
   #opcoes {
@@ -737,16 +745,14 @@ input[type="number"]::-webkit-inner-spin-button {
   #corpo {
     padding-top: 80px;
   }
-
-  #logout {
-    padding: 5px 18px;
-    top: 35px;
-    right: 10px;
-  }
 }
 
 @media (max-width: 350px) {
-  #opcoes {
-    grid-template-columns: 1fr;
+  #abrir_fechar {
+    top: 35px;
+  }
+
+  #logout {
+    top: 35px;
   }
 }

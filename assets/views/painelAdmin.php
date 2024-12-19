@@ -160,20 +160,9 @@
                     placeholder="Buscar funcionario">
             </div>
             <div id="corpo_funcionario">
-                <table>
-                    <thead>
-                        <th>ID do Funcionário</th>
-                        <th>Nome</th>
-                        <th>CPF</th>
-                        <th>Contato</th>
-                        <th>E-mail</th>
-                        <th>Endereço</th>
-                        <th>Excluir</th>
-                    </thead>
-                    <tbody id="tabela_funcionarios">
+                <div id="tabela_funcionarios">
 
-                    </tbody>
-                </table>
+                </div>
             </div>
         </div>
     </div>
@@ -190,20 +179,9 @@
                     placeholder="Buscar usuário">
             </div>
             <div id="corpo_usuario">
-                <table>
-                    <thead>
-                        <th>ID do Usuário</th>
-                        <th>Nome</th>
-                        <th>CPF</th>
-                        <th>Contato</th>
-                        <th>E-mail</th>
-                        <th>Endereço</th>
-                        <th>Excluir</th>
-                    </thead>
-                    <tbody id="tabela_usuarios">
+                <div id="tabela_usuarios">
 
-                    </tbody>
-                </table>
+                </div>
             </div>
         </div>
     </div>
@@ -219,18 +197,9 @@
                     placeholder="Buscar atividade">
             </div>
             <div id="corpo_historico">
-                <table>
-                    <thead>
-                        <th>ID da Atividade</th>
-                        <th>ID do Usuário</th>
-                        <th>Nome</th>
-                        <th>Ação</th>
-                        <th>Data</th>
-                    </thead>
-                    <tbody id="tabela_atividades">
+                <div id="tabela_atividades">
 
-                    </tbody>
-                </table>
+                </div>
                 <div class="paginacao">
                     <button type="button" onclick="diminuirPagAtividades()">Anterior</button>
                     <input type="number" name="pag" class="pag" readonly value="1">

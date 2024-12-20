@@ -175,7 +175,6 @@
     </div>
     <section id="corpo">
         <div id="imgPrin">
-            <img src="assets/image/imagemPrinLogo.jpg" alt="Imagem Principal">
         </div>
         <div class="usuario">
             <h2 id="bv">Seja bem-vindo(a), <b><?php echo $_SESSION['nome'] ?></b>!</h2>

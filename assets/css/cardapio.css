@@ -16,31 +16,31 @@
 
 #corpo {
   padding: 15px;
-  padding-top: 100px;
+  padding-top: 80px;
   background-color: white;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.384);
   font-family: "corpo";
 }
 
 #imgPrin {
-  width: 100%;
-  margin-bottom: 80px;
-}
-
-#imgPrin img {
-  margin: auto;
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: 5px;
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.384);
+  background-image: url("../image/imagemPrinLogo.jpg");
+  background-repeat: no-repeat;
+  background-position: center 80px;
+  background-attachment: fixed;
+  background-size: 100% 230px;
+  height: 300px;
+  width: calc(100% + 30px);
+  margin-left: -15px;
 }
 
 .usuario {
-  width: 100%;
+  width: calc(100% + 30px);
   font-size: 1.2em;
-  margin: -45px 30px 30px 0;
+  margin: -75px 30px 30px -15px;
+  border-radius: 15px 15px 0 0;
   text-align: center;
+  background-color: white;
+  padding: 25px 0;
 }
 
 #informacoes {
@@ -875,6 +875,12 @@ hr {
 }
 
 @media (max-width: 1200px) {
+  #imgPrin {
+    background-position: center 80px;
+    background-size: 100% 150px;
+    height: 225px;
+  }
+
   .pratos,
   .bebidas,
   .destaques {
@@ -890,6 +896,12 @@ hr {
 }
 
 @media (max-width: 1000px) {
+  #imgPrin {
+    background-position: center 80px;
+    background-size: 100% 110px;
+    height: 215px;
+  }
+
   #corpo {
     padding-top: 50px;
   }
@@ -918,6 +930,12 @@ hr {
 
 /* Layout responsivo para telas menores */
 @media (max-width: 768px) {
+  #imgPrin {
+    background-position: center 80px;
+    background-size: 100% 100px;
+    height: 195px;
+  }
+
   #qtd {
     display: flex;
     margin-left: 55px;
@@ -974,6 +992,12 @@ hr {
 }
 
 @media (max-width: 700px) {
+  #imgPrin {
+    background-position: center 50px;
+    background-size: 100% 80px;
+    height: 194px;
+  }
+
   #qtd {
     margin-left: 55px;
     height: 25px;
@@ -1012,6 +1036,12 @@ hr {
 }
 
 @media (max-width: 600px) {
+  #imgPrin {
+    background-position: center 40px;
+    background-size: 100% 80px;
+    height: 180px;
+  }
+
   #qtd {
     margin-left: 55px;
     height: 25px;
@@ -1053,6 +1083,12 @@ hr {
 }
 
 @media (max-width: 510px) {
+  #imgPrin {
+    background-position: center 40px;
+    background-size: 100% 80px;
+    height: 184px;
+  }
+
   #qtd {
     margin-left: 45px;
   }
@@ -1184,6 +1220,12 @@ hr {
 }
 
 @media (max-width: 350px) {
+  #imgPrin {
+    background-position: center 30px;
+    background-size: 100% 60px;
+    height: 145px;
+  }
+
   #qtd {
     margin-left: 45px;
   }

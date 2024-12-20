@@ -170,7 +170,7 @@ td {
   background-color: rgba(0, 0, 0, 0.377);
   height: 100vh;
   width: 100%;
-  z-index: 9993;
+  z-index: 9999;
   display: none;
   justify-content: center;
   align-items: center;
@@ -247,7 +247,8 @@ td {
   cursor: pointer;
 }
 
-.refresh {
+.refresh,
+#adicionar {
   position: absolute;
   cursor: pointer;
   right: 15px;
@@ -255,7 +256,8 @@ td {
 }
 
 .back img,
-.refresh img {
+.refresh img,
+#adicionar img {
   width: 40px;
   height: 40px;
 }
@@ -341,23 +343,6 @@ td {
   cursor: pointer;
   border: none;
   transition: 0.3s;
-}
-
-#adicionar {
-  background-color: rgb(53, 31, 31);
-  color: white;
-  width: 50px;
-  height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  font-size: 2em;
-  position: fixed;
-  bottom: 105px;
-  right: 145px;
-  z-index: 9998;
-  cursor: pointer;
 }
 
 #adicionarFunc {
@@ -488,6 +473,7 @@ input[type="number"]::-webkit-inner-spin-button {
   z-index: 9999;
   width: 100%;
   height: 100%;
+  overflow-x: scroll;
   padding: 15px;
 }
 
@@ -577,7 +563,7 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .pag {
-  background: transparent;
+  width: 20px;
   border: none;
   text-align: center;
   outline: none;
@@ -585,10 +571,10 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .paginacao {
-  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
 }
 
 .paginacao button {
@@ -629,6 +615,45 @@ input[type="number"]::-webkit-inner-spin-button {
   }
 }
 
+@media (max-width: 1010px) {
+  .fundo_financas {
+    width: 100%;
+  }
+
+  .graficos {
+    width: 97%;
+  }
+
+  .graficos h1 {
+    font-size: 1.5em;
+  }
+
+  #btnFil {
+    margin-top: 5px;
+    width: 70%;
+  }
+
+  #filtro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #corpo_financas {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto; /* Define duas linhas de tamanhos automáticos */
+    gap: 20px;
+    grid-template-areas:
+      "vendas_clientes"
+      "vendas_pratos"
+      "vendas_bebidas"
+      "vendas_periodo"
+      "vendas_periodo_valor";
+  }
+}
+
 @media (max-width: 930px) {
   .pedidos,
   #tabela_produtos,
@@ -636,6 +661,22 @@ input[type="number"]::-webkit-inner-spin-button {
   #tabela_atividades,
   #tabela_funcionarios,
   #tabela_usuarios {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 890px) {
+  .btn-container {
+    flex-direction: column;
+  }
+
+  .btn button {
+    width: 100%;
+    margin: 0;
+  }
+
+  #corpo_adicionar_user {
+    gap: 10px;
     grid-template-columns: 1fr 1fr;
   }
 }
@@ -738,6 +779,14 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 @media (max-width: 520px) {
+  .fundo_adicionar_user h1 {
+    font-size: 1.2em;
+  }
+
+  #corpo_adicionar_user {
+    grid-template-columns: 1fr;
+  }
+
   #opcoes {
     grid-template-columns: 1fr;
   }
@@ -748,6 +797,10 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 @media (max-width: 350px) {
+  .fundo_adicionar_user h1 {
+    font-size: 1em;
+  }
+
   #abrir_fechar {
     top: 35px;
   }

@@ -96,14 +96,11 @@
     </div>
     <div id="fundo_produtos">
         <div class="fundo_produtos">
-            <div id="adicionar">
-                +
-            </div>
             <div class="back" onclick="fecharProdutos()">
                 <img src="assets/image/close.png" alt="Voltar">
             </div>
-            <div class="refresh" onclick="mostrarProdutos()">
-                <img src="assets/image/refresh.png" alt="Voltar">
+            <div id="adicionar">
+                <img src="assets/image/add.png" alt="Adicionar Produto">
             </div>
             <h1 style="text-align: center;">Produtos</h1>
             <div class="barra">
@@ -281,10 +278,10 @@
             </div>
             <div class="btn-container">
                 <div class="btn">
-                    <button id="prox" onclick="cadastrarFunc()" style="margin-left: 15px;">Cadastrar</button>
+                    <button id="prox" onclick="cadastrarFunc()">Cadastrar</button>
                 </div>
                 <div class="btn">
-                    <button type="reset" style="margin-right: 15px;">Limpar</button>
+                    <button type="reset">Limpar</button>
                 </div>
             </div>
         </div>
@@ -301,15 +298,15 @@
             <h1 style="text-align: center; margin-bottom: 15px;">Finanças</h1>
             <div id="corpo_financas">
                 <div id="vendas_clientes" class="graficos">
-                    <h1>Principais Clientes</h1>
+                    <h1 style="text-align: center;">Principais Clientes</h1>
                     <canvas id="clientes"></canvas>
                 </div>
                 <div id="vendas_pratos" class="graficos">
-                    <h1>Principais Pratos</h1>
+                    <h1 style="text-align: center;">Principais Pratos</h1>
                     <canvas id="pratos"></canvas>
                 </div>
                 <div id="vendas_bebidas" class="graficos">
-                    <h1>Principais Bebidas</h1>
+                    <h1 style="text-align: center;">Principais Bebidas</h1>
                     <canvas id="bebidas"></canvas>
                 </div>
                 <div id="vendas_periodo" class="graficos">

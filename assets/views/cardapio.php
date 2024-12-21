@@ -84,7 +84,7 @@
             </div>
             <h1 style="text-align: center;">Novo Endereço</h1>
             <div id="corpo_trocar">
-                <input type="text" name="trocar_cep" id="trocar_cep" placeholder="CEP" onkeyup="buscarCEP()">
+                <input type="text" name="trocar_cep" id="trocar_cep" placeholder="CEP" oninput="cepInput()">
                 <input type="text" name="trocar_rua" id="trocar_rua" placeholder="Rua">
                 <input type="text" name="trocar_bairro" id="trocar_bairro" placeholder="Bairro">
                 <input type="text" name="trocar_cidade" id="trocar_cidade" placeholder="Cidade">

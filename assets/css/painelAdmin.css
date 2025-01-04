@@ -96,15 +96,21 @@ td {
   color: white;
   border-radius: 10px;
   background-color: rgba(0, 0, 0, 0.445);
-  transition: opacity 0.3s ease, visibility 0.3s ease;
   cursor: pointer;
-  opacity: 0; /* Inicialmente invisível */
-  visibility: hidden; /* Garante que não ocupa espaço quando invisível */
 }
 
-.fundo_opcao.visible {
-  opacity: 1;
-  visibility: visible;
+.fundo_opcao h1 {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s;
+}
+
+.fundo_opcao h1:hover {
+  transition: 0.3s;
+  transform: scale(1.2);
 }
 
 #fundo_produtos,

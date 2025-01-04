@@ -357,30 +357,30 @@
                     <img src="assets/image/historico.png" alt="Historico" id="historico">
                 </div>
                 <?php if ($_SESSION['tipo_usuario'] === "master") : ?>
-                <div id="financas">
-                    <div id="mostrar_financas" class="fundo_opcao" onclick="mostrarFinancas()">
-                        <h1 class="opcao">Finanças</h1>
+                    <div id="financas">
+                        <div id="mostrar_financas" class="fundo_opcao" onclick="mostrarFinancas()">
+                            <h1 class="opcao">Finanças</h1>
+                        </div>
+                        <img src="assets/image/financas.webp" alt="Finanças" id="financas">
                     </div>
-                    <img src="assets/image/financas.webp" alt="Finanças" id="financas">
-                </div>
-                <div id="atividades">
-                    <div id="mostrar_atividades" class="fundo_opcao" onclick="mostrarAtividades(1)">
-                        <h1 class="opcao">Atividades</h1>
+                    <div id="atividades">
+                        <div id="mostrar_atividades" class="fundo_opcao" onclick="mostrarAtividades(1)">
+                            <h1 class="opcao">Atividades</h1>
+                        </div>
+                        <img src="assets/image/atividades.png" alt="Atividades" id="atividades">
                     </div>
-                    <img src="assets/image/atividades.png" alt="Atividades" id="atividades">
-                </div>
-                <div id="adicionar_user">
-                    <div id="mostrar_adicionar_user" class="fundo_opcao" onclick="getFuncionarios()">
-                        <h1 class="opcao">Adicionar Funcionário</h1>
+                    <div id="adicionar_user">
+                        <div id="mostrar_adicionar_user" class="fundo_opcao" onclick="getFuncionarios()">
+                            <h1 class="opcao">Adicionar Funcionário</h1>
+                        </div>
+                        <img src="assets/image/adicionar.png" alt="Adicionar Funcionário" id="adicionar_user">
                     </div>
-                    <img src="assets/image/adicionar.png" alt="Adicionar Funcionário" id="adicionar_user">
-                </div>
-                <div id="ver_usuarios">
-                    <div id="mostrar_usuarios" class="fundo_opcao" onclick="getUsuarios()">
-                        <h1 class="opcao">Usuários</h1>
+                    <div id="ver_usuarios">
+                        <div id="mostrar_usuarios" class="fundo_opcao" onclick="getUsuarios()">
+                            <h1 class="opcao">Usuários</h1>
+                        </div>
+                        <img src="assets/image/user.png" alt="Consultar Usuários" id="consultar_usuarios">
                     </div>
-                    <img src="assets/image/user.png" alt="Consultar Usuários" id="consultar_usuarios">
-                </div>
                 <?php else: ?>
                 <?php endif; ?>
             </div>

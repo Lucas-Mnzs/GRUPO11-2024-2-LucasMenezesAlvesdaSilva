@@ -60,6 +60,8 @@ function cepHomeError() {
   document.querySelector(".cidade").value = "";
   document.querySelector(".estado").value = "";
   document.querySelector("#resposta").textContent = "";
+  document.querySelector("#resposta").style.padding = "0px";
+  document.querySelector("#resposta").style.marginTop = "0px";
   document.querySelector(".num").setAttribute("readonly", true);
   document.querySelector(".cep").style.border = "1px solid red";
   document.querySelector(".cep").style.filter =

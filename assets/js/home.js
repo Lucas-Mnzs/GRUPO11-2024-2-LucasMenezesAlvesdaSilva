@@ -83,7 +83,7 @@ function cepInput() {
     } else {
       cepHomeError();
     }
-  }, 300);
+  }, 100);
 }
 
 function buscarCEP(cep) {
@@ -153,7 +153,7 @@ function cepInpu() {
     } else {
       cepCadError();
     }
-  }, 300);
+  }, 100);
 }
 
 function buscaCEP(cep) {
@@ -195,6 +195,7 @@ function buscaCEP(cep) {
 // FUNÇÃO PARA VERIFICAR SE O ENDEREÇO É ATENDIDO
 $("#formPrin").on("submit", function (event) {
   event.preventDefault();
+  mostrarLoad();
 
   let formData = new FormData(this);
 
@@ -206,7 +207,6 @@ $("#formPrin").on("submit", function (event) {
     contentType: false,
     dataType: "json",
     success: function (response) {
-      mostrarLoad();
       if (response.status === "success") {
         setTimeout(function () {
           esconderLoad();

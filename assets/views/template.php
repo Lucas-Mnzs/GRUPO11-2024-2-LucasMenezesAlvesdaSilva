@@ -24,6 +24,19 @@
     <main id="paginas">
 
     </main>
+    <div id="cookie">
+        <div id="explicacao">
+            <p>Nosso site utiliza cookies para oferecer uma melhor experiência de navegação. Cookies são pequenos
+                arquivos de texto armazenados no seu dispositivo quando você visita um site. Eles ajudam a lembrar suas
+                preferências, melhorar o desempenho do site e oferecer conteúdos personalizados.</p>
+        </div>
+        <div id="opcoes">
+            <div id="btns">
+                <button id="aceitar">Aceitar Cookies</button>
+                <button id="rejeitar">Rejeitar Cookies</button>
+            </div>
+        </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="assets/js/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>

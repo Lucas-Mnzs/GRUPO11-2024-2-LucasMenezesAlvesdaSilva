@@ -94,6 +94,67 @@ p {
   animation: load infinite linear 1s;
 }
 
+#cookie {
+  background-color: rgb(23, 21, 46);
+  color: white;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 99999;
+  animation: cookieAppear 0.8s linear;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  border-radius: 10px 10px 0px 0px;
+  box-shadow: -5px 0 10px black;
+}
+
+#explicacao,
+#opcoes {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
+}
+
+#btns {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+#btns button {
+  width: 30%;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#aceitar {
+  background-color: blue;
+  color: white;
+}
+
+#btns button:hover {
+  filter: brightness(70%);
+}
+
+@keyframes cookieAppear {
+  0% {
+    transform: translate(0, 100%);
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}
+
 @keyframes load {
   0% {
     transform: rotate(0);
@@ -111,6 +172,16 @@ p {
 
   #topo h1 {
     font-size: 1.8em;
+  }
+}
+
+@media (max-width: 640px) {
+  #btns {
+    flex-direction: column;
+  }
+
+  #btns button {
+    width: 100%;
   }
 }
 

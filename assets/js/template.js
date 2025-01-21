@@ -1,7 +1,3 @@
-function esconderLoad() {
-  $("#fundo_load").css("display", "none");
-}
-
 // Função para iniciar
 $(document).ready(function () {
   if (localStorage.getItem("ultimaPagina") === "cardapio") {
@@ -30,4 +26,18 @@ $(document).ready(function () {
       },
     });
   }
+});
+
+if (localStorage.getItem("cookiePref") == "Aceita") {
+  $("#cookie").css("display", "none");
+}
+
+$("#aceitar").on("click", function () {
+  localStorage.setItem("cookiePref", "Aceita");
+  $("#cookie").css("display", "none");
+});
+
+$("#rejeitar").on("click", function () {
+  localStorage.setItem("cookiePref", "Rejeita");
+  $("#cookie").css("display", "none");
 });

@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="assets/css/template.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="shortcut icon" href="assets/image/logo.png" type="image/x-icon">
     <title>Cantinho Suam</title>
 </head>
 

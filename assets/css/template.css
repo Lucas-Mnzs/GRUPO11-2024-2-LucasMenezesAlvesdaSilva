@@ -134,11 +134,6 @@ p {
   transition: 0.3s;
 }
 
-#aceitar {
-  background-color: blue;
-  color: white;
-}
-
 #btns button:hover {
   filter: brightness(70%);
 }

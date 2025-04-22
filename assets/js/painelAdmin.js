@@ -155,21 +155,32 @@ function mostrarPedidos() {
             </div>
             <hr>
             <div id="botoes_pedido">
-              <button type="button" id="aceitar" class="verde" onclick="aceitar(${
-                dado.id_usuario
-              })">Aceitar</button>
-              <button type="button" id="rota" class="verde" onclick="rota(${
-                dado.id_usuario
-              })">Em Rota</button>
-              <button type="button" id="recusar" class="vermelho" onclick="recusar(${
-                dado.id_usuario
-              })">Recusar</button>
-              <button type="button" id="finalizar" class="vermelho" onclick="finalizar(${
-                dado.id_usuario
-              })">Finalizar</button>
+              <button type="button" class="aceitar verde aceitar-${
+                dado.id_pedido
+              }" onclick="aceitar(${dado.id_usuario})">Aceitar</button>
+              <button type="button" class="rota verde rota-${
+                dado.id_pedido
+              }" onclick="rota(${dado.id_usuario})">Em Rota</button>
+              <button type="button" class="recusar vermelho recusar-${
+                dado.id_pedido
+              }" onclick="recusar(${dado.id_usuario})">Recusar</button>
+              <button type="button" class="finalizar vermelho finalizar-${
+                dado.id_pedido
+              }" onclick="finalizar(${dado.id_usuario})">Finalizar</button>
             </div>
           </div>
         `);
+        if (dado.situacao === "O pedido está em preparação!") {
+          $(`.recusar-${dado.id_pedido}`).css("display", "none");
+          $(`.aceitar-${dado.id_pedido}`).css("display", "none");
+          $(`.rota-${dado.id_pedido}`).css("width", "45%");
+          $(`.finalizar-${dado.id_pedido}`).css("width", "45%");
+        } else if (dado.situacao === "O pedido saiu para entrega!") {
+          $(`.recusar-${dado.id_pedido}`).css("display", "none");
+          $(`.aceitar-${dado.id_pedido}`).css("display", "none");
+          $(`.rota-${dado.id_pedido}`).css("display", "none");
+          $(`.finalizar-${dado.id_pedido}`).css("width", "100%");
+        }
       });
     },
     error: function (xhr, status, error) {

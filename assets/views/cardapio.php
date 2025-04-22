@@ -181,7 +181,7 @@
         </div>
         <div id="informacoes">
             <div id="hora_aberto">
-                <p id="hora">Funcionamento: 11 - 15h <?php echo $_SESSION['id_usuario'] ?></p>
+                <p id="hora">Funcionamento: 11 - 15h</p>
                 <p id="situacao_aberto"></p>
             </div>
             <div id="entrega_taxa">
